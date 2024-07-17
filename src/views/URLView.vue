@@ -84,13 +84,14 @@ if (url) {
   }
 }
 
-const copy = async (text) => {
+async function copy(text) {
   await copyToClipboard(text);
   toast('Copied to clipboard');
 }
 
-const share = (url) => {
+function share(url) {
   try {
+    alert(url);
     navigator.share({
       url
     });
