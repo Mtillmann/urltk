@@ -10,30 +10,26 @@
             const url = new URL(window.location);
             const params = url.searchParams;
 
+            const fieldsToAttempt = ['url', 'text', 'title', 'description', 'name'];
+
             let urlToProcess = null;
             //attempt to find anything that looks like a URL
-            try {
-                urlToProcess = new URL(params.get('url')).href;
-            } catch (e) {
-                //no-op
-            }
 
-            try {
-                urlToProcess = new URL(params.get('text')).href;
-            } catch (e) {
-                //no-op
-            }
+            fieldsToAttempt.forEach((field) => {
+                if (urlToProcess) {
+                    return;
+                }
 
-            try {
-                urlToProcess = new URL(params.get('title')).href;
-            } catch (e) {
-                //no-op
-            }
+                try {
+                    urlToProcess = new URL(params.get(field)).href;
+                } catch (e) {
+                    //no-op
+                }
+            });
 
             const targetURL = new URL(location.origin);
             targetURL.pathname = '/urltk/';
             targetURL.hash = `#/url/${encodeURIComponent(urlToProcess)}`;
-
 
 
             alert(targetURL.href);
