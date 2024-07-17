@@ -91,7 +91,6 @@ async function copy(text) {
 
 function share(name, url) {
   try {
-    alert(url);
     navigator.share({
       title: `URLtk - ${name}`,
       url
