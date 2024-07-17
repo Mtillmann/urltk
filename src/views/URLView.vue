@@ -138,7 +138,7 @@ function permalink(transformed) {
             </a>
           </li>
           <li v-if="canShare">
-            <a class="dropdown-item" href="#" @click.stop.prevent="share">
+            <a class="dropdown-item" href="#" @click.stop.prevent="share(t.url)">
               Share URL
             </a>
           </li>
