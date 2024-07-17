@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>URLtk PWA Share Target</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const url = new URL(window.location);
+            const params = url.searchParams;
+
+            let urlToProcess = null;
+            //attempt to find anything that looks like a URL
+            try {
+                urlToProcess = new URL(params.get('url')).href;
+            } catch (e) {
+                //no-op
+            }
+
+            try {
+                urlToProcess = new URL(params.get('text')).href;
+            } catch (e) {
+                //no-op
+            }
+
+            try {
+                urlToProcess = new URL(params.get('title')).href;
+            } catch (e) {
+                //no-op
+            }
+
+            const targetURL = new URL(location.origin);
+            targetURL.pathname = '/';
+            targetURL.hash = `#/url/${encodeURIComponent(urlToProcess)}`;
+
+            location.replace(targetURL.href);
+        });
+    </script>
+</head>
+<body>
+<p>This is the share-target used by the PWA. If you see this message, something has gone wrong :(</p>
+</body>
+</html>
