@@ -89,10 +89,11 @@ async function copy(text) {
   toast('Copied to clipboard');
 }
 
-function share(url) {
+function share(name, url) {
   try {
     alert(url);
     navigator.share({
+      title: `URLtk - ${name}`,
       url
     });
   } catch (e) {
@@ -139,7 +140,7 @@ function permalink(transformed) {
             </a>
           </li>
           <li v-if="canShare">
-            <a class="dropdown-item" href="#" @click.stop.prevent="share(t.url)">
+            <a class="dropdown-item" href="#" @click.stop.prevent="share(t.name, t.url)">
               Share URL
             </a>
           </li>
@@ -193,7 +194,7 @@ function permalink(transformed) {
         <a href="#" class="btn btn-outline-primary" @click.stop.prevent="copy(t.url)"
            v-if="store.settings.showCopyButton">
           <i class="bi bi-copy"></i> Copy</a>
-        <a v-if="canShare && store.settings.showShareButton" href="#" class="btn btn-outline-primary" @click.stop.prevent="share">
+        <a v-if="canShare && store.settings.showShareButton" href="#" class="btn btn-outline-primary" @click.stop.prevent="share(t.name, t.url)">
           <i class="bi bi-share"></i> Share</a>
         <a class="btn btn-outline-primary" target="_blank" :href="t.url" v-if="store.settings.showOpenButton">
           <i class="bi bi-box-arrow-up-right"></i> Open</a>
