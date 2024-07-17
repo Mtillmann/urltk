@@ -1,6 +1,6 @@
 # URLtk
 
-[https://mtillmann.github.io/URLtk/](https://mtillmann.github.io/URLtk/)
+[https://mtillmann.github.io/urltk/](https://mtillmann.github.io/urltk/)
 
 - enhance, manipulate, remix URLs
 - share your actions with others
