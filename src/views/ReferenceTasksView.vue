@@ -65,7 +65,7 @@ import ReferenceTaskItem from "../components/ReferenceTaskItem.vue";
     <p>
       Simple replacement syntax:
     </p>
-    <table class="table table-sm small">
+    <table class="table table-sm table-responsive small">
       <thead>
       <tr>
         <th>Input</th>
@@ -138,7 +138,7 @@ import ReferenceTaskItem from "../components/ReferenceTaskItem.vue";
     <p>
       Examples:
     </p>
-    <table class="table-sm table small">
+    <table class="table-sm table-responsive table small">
       <thead>
       <tr>
         <th>
@@ -186,7 +186,7 @@ import ReferenceTaskItem from "../components/ReferenceTaskItem.vue";
       Examples:
     </p>
 
-    <table class="table-sm table small">
+    <table class="table-sm table-responsive table small">
       <thead>
       <tr>
         <th>
