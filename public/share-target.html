@@ -27,7 +27,7 @@
                 }
             });
 
-            const targetURL = new URL(location.origin + location.pathname);
+            const targetURL = new URL(location.origin + location.pathname.replace('share-target.html',''));
             targetURL.hash = `#/url/${encodeURIComponent(urlToProcess)}`;
 
             location.replace(targetURL.href);
