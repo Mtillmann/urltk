@@ -72,7 +72,7 @@ if (url) {
           resultIsURL,
           action,
           diff,
-          deflated: btoa(JSON.stringify(deflateAction(action)))
+          deflated: btoa(JSON.stringify([deflateAction(action)]))
         }
 
       });
@@ -149,7 +149,7 @@ function permalink(transformed) {
             </a>
           </li>
           <li v-if="isUsingQueryActions">
-            <router-link class="dropdown-item" :to="{name : 'importActions', query: {actions: [t.deflated]}}">
+            <router-link class="dropdown-item" :to="{name : 'importActions', query: {actions: t.deflated}}">
               Import Action
             </router-link>
           </li>
