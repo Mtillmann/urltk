@@ -68,7 +68,7 @@ const canOpenURL = computed(() => {
 });
 
 const code = computed(() => {
-  const link = new URL(window.location.origin);
+  const link = new URL(location.origin + location.pathname);
   let hash = '#/url/\${encodeURIComponent(location.href)}';
   const query = []
   if (['single-action', 'multi-action'].includes(mode.value)) {

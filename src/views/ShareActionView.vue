@@ -11,7 +11,7 @@ const store = inject('store');
 const action = store.actions[actionId];
 const {toast} = inject('toast');
 
-const link = new URL(window.location.origin);
+const link = new URL(location.origin + location.pathname);
 link.hash = `#/import-actions/?actions=${btoa(JSON.stringify([deflateAction(action)]))}`;
 
 const canShare = 'share' in navigator;

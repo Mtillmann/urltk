@@ -27,8 +27,7 @@
                 }
             });
 
-            const targetURL = new URL(location.origin);
-            targetURL.pathname = '/urltk/';
+            const targetURL = new URL(location.origin + location.pathname);
             targetURL.hash = `#/url/${encodeURIComponent(urlToProcess)}`;
 
             location.replace(targetURL.href);

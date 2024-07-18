@@ -16,7 +16,7 @@ function exportJSON() {
 }
 
 function makeURL() {
-  const url = new URL(window.location.origin);
+  const url = new URL(location.origin + location.pathname);
   const actions = store.actions.map(a => deflateAction(a));
   url.hash = `#/import-actions/?actions=${btoa(JSON.stringify(actions))}`;
   return url.toString();
