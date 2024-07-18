@@ -11,7 +11,7 @@ import DerefView from './views/DerefView.vue'
 import ShareActionView from './views/ShareActionView.vue'
 import ImportActionsView from './views/ImportActionsView.vue'
 import BookmarkletView from './views/BookmarkletView.vue'
-import ShareTargetActionView from './views/ShareTargetActionView.vue'
+import ReferenceTasksView from "./views/ReferenceTasksView.vue";
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -53,12 +53,6 @@ const router = createRouter({
             meta: {inNavigation: true, title: 'Settings'}
         },
         {
-            path: '/reference',
-            name: 'reference',
-            component: ReferenceView,
-            meta: {inNavigation: true, title: 'Reference'}
-        },
-        {
             path: '/deref',
             name: 'deref',
             component: DerefView,
@@ -83,11 +77,18 @@ const router = createRouter({
             meta: {inNavigation: false, title: 'Create Bookmarklet'}
         },
         {
-            path: '/sharetarget',
-            name: 'shareTarget',
-            component: ShareTargetActionView,
-            meta: {inNavigation: false, title: 'Share Target'}
+            path: '/reference',
+            name: 'reference',
+            component: ReferenceView,
+            meta: {inNavigation: true, title: 'Reference'}
+        },
+        {
+            path: '/reference/tasks',
+            name: 'referenceTasks',
+            component: ReferenceTasksView,
+            meta: {inNavigation: false, title: 'Reference - Tasks'}
         }
+
     ]
 })
 

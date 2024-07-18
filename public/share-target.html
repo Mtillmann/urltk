@@ -13,8 +13,8 @@
             const fieldsToAttempt = ['url', 'text', 'title', 'description', 'name'];
 
             let urlToProcess = null;
-            //attempt to find anything that looks like a URL
 
+            //attempt to find anything that looks like a URL
             fieldsToAttempt.forEach((field) => {
                 if (urlToProcess) {
                     return;
@@ -27,14 +27,49 @@
                 }
             });
 
-            const targetURL = new URL(location.origin + location.pathname.replace('share-target.html',''));
+            const targetURL = new URL(location.origin + location.pathname.replace('share-target.html', ''));
             targetURL.hash = `#/url/${encodeURIComponent(urlToProcess)}`;
+
+            setTimeout(() => {
+                document.getElementById('waiting').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
+            }, 2000);
 
             location.replace(targetURL.href);
         });
     </script>
+    <style>
+        html, body {
+            background-color: #808080;
+        }
+
+        #errorMessage {
+            display: none;
+        }
+
+        #waiting {
+            font-size: 5em;
+            text-align: center;
+            margin-top: 50vh;
+            transform: translateY(-50%);
+        }
+
+        #errorMessage {
+            text-align: center;
+            color: white;
+            font-size: 1.5em;
+            margin-top: 50vh;
+            transform: translateY(-50%);
+        }
+
+    </style>
 </head>
 <body>
-<p>This is the share-target used by the PWA. If you see this message, something has gone wrong :(</p>
+<div id="waiting">⏳</div>
+<p id="errorMessage">
+    This is the share-target used by the PWA. If you see this message, something has gone wrong :(
+    <br>
+    <a href="/urltk/">Click here to go back to the app</a>
+</p>
 </body>
 </html>

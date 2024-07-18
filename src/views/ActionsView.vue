@@ -49,7 +49,7 @@ function addAction(position) {
       </div>
       <div class="card-body small">
 
-        <TaskFlow :action="action" :crop="12"/>
+        <TaskFlow :action="action"/>
 
       </div>
       <div class="card-footer d-flex justify-content-center">

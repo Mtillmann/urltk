@@ -158,6 +158,11 @@ function permalink(transformed) {
               Permalink current view
             </a>
           </li>
+          <li>
+            <router-link :to="{name:'share', params : {id : t.action.index}}" class="dropdown-item">
+              Share Action
+            </router-link>
+          </li>
           <li v-if="!isUsingQueryActions">
             <router-link :to="{name:'bookmarklet', query : {action : t.action.index}}" class="dropdown-item">
               Make Bookmarklet
