@@ -30,10 +30,6 @@ if (route.params.id === 'new') {
   conflicts.value = checkTypeConflicts(tasks.value);
 }
 
-const original = JSON.stringify(action.value);
-const hasChanges = ref(false);
-
-
 function saveAction() {
   store.saveAction(action.value, route.params.id, position);
   toast('Action saved');
@@ -43,11 +39,11 @@ function saveAction() {
 
 watch(tasks.value, (newVal) => {
   for (let i = 0; i < newVal.length; i++) {
-    const transformationName = newVal[i];
-    if (!action.value.tasks[i] || action.value.tasks[i].name !== transformationName) {
+    const taskName = newVal[i];
+    if (!action.value.tasks[i] || action.value.tasks[i].name !== taskName) {
       action.value.tasks[i] = {
-        name: transformationName,
-        args: Transformer.tasks[transformationName].args.map((a) => a.default ?? '')
+        name: taskName,
+        args: Transformer.tasks[taskName].args.map((a) => a.default ?? '')
       }
     }
   }
@@ -75,7 +71,7 @@ watch(tasks.value, (newVal) => {
     </button>
   </div>
 
-  <template v-for="transformation, i in action.tasks" :key="i">
+  <template v-for="task, i in action.tasks" :key="i">
     <div class="card">
       <div class="card-header">
         <p v-if="conflicts[i]" class="small py-1 px-2 alert alert-warning">
@@ -85,7 +81,7 @@ watch(tasks.value, (newVal) => {
         </p>
         <div class="d-flex">
           <div class="form-floating flex-grow-1">
-            <select class="form-select" :id="`transformation_${i}`" aria-label="Action"
+            <select class="form-select" :id="`task_${i}`" aria-label="Action"
                     v-model="tasks[i]">
               <optgroup v-for="group, groupname in Transformer.grouped" :label="groupname">
                 <option v-for="transformer, key in group" :value="key">{{
@@ -94,7 +90,7 @@ watch(tasks.value, (newVal) => {
                 </option>
               </optgroup>
             </select>
-            <label :for="`transformation_${i}`">Task</label>
+            <label :for="`task_${i}`">Task</label>
           </div>
           <button v-if="action.tasks.length > 1"
                   @click="action.tasks.splice(i, 1), tasks.splice(i, 1)"
@@ -118,8 +114,8 @@ watch(tasks.value, (newVal) => {
         <template v-for="a, j in Transformer.tasks[action.tasks[i].name].args" :key="j">
           <template v-if="!('type' in a) || a.type === 'input'">
             <div class="form-floating" :class="{'mb-3': !a.hint}">
-              <input type="text" class="form-control form-control-sm" :id="`arg_${i}_${j}`"
-                     placeholder="Argument" v-model="action.tasks[i].args[j]"/>
+              <input type="text" autocomplete="off" class="form-control form-control-sm" :id="`arg_${i}_${j}`"
+                     :placeholder="a.name" v-model="action.tasks[i].args[j]"/>
               <label :for="`arg_${i}_${j}`">{{ a.name }}</label>
             </div>
 
