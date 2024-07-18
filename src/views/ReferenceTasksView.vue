@@ -1,6 +1,4 @@
 <script setup>
-import Transformer from "../Transformer.js";
-import TaskArguments from "../components/ReferenceTaskItem.vue";
 import ReferenceTaskItem from "../components/ReferenceTaskItem.vue";
 
 

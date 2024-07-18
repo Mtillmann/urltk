@@ -6,7 +6,7 @@
 // Both: cache a fresh version if possible.
 // (beware: the cache will grow and grow; there's no cleanup)
 
-const cacheName = 'files';
+const cacheName = 'urltk_cache_v1';
 
 addEventListener('fetch',  fetchEvent => {
 
