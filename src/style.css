@@ -13,6 +13,23 @@
     line-height: 1.2;
 }
 
+.display-8 {
+    font-size: calc(0.725rem + 1.5vw);
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.display-9 {
+    font-size: calc(0.65rem + 1.5vw);
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.w-0{
+    width: 0;
+
+}
+
 .break-all {
     word-break: break-all;
 }
