@@ -53,7 +53,6 @@ const dl = () => {
 
   <code class="break-all d-block rounded p-2 border-secondary border">{{ link }}</code>
 
-  {{ canShare }}
 
   <button @click="copy" class="my-3 mx-auto d-block btn btn-outline-secondary">
     <i class="bi bi-copy"></i> Copy Link to Clipboard
