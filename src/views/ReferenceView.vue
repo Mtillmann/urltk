@@ -2,5 +2,5 @@
 
 </script>
 <template>
-  asdf
+  <router-link :to="{name: 'referenceTasks'}">Tasks documentation</router-link>
 </template>
