@@ -3,8 +3,8 @@ import {defineStore} from "pinia";
 export default defineStore('toasts', {
 
     state: () => ({
-        x: 0,
-        y: 0,
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
         notice: null,
         confirm: null,
         noticeTimeout: null,
@@ -19,13 +19,6 @@ export default defineStore('toasts', {
             if (this.noticeTimeout) {
                 clearTimeout(this.noticeTimeout);
             }
-
-
-            return;
-
-            this.noticeTimeout = setTimeout(() => {
-                this.notice = null;
-            }, ttl);
         }
     }
 });

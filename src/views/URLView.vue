@@ -14,6 +14,7 @@ const store = inject('store');
 const route = useRoute();
 const router = useRouter();
 const {toast} = inject('toast');
+const openURL = route.query.openURL === '1';
 
 const canShare = 'share' in navigator;
 const transformed = ref([]);
@@ -37,7 +38,7 @@ if (queryActions) {
 const actions = queryActions ? queryActions : store.actions;
 if (!Transformer.filter(url, actions)) {
   url = null
-  toast('No actions available for given URL', 'warning');
+  toast('No actions available for given URL', 'warning', 5000);
   router.push({name: 'home'})
 }
 
@@ -79,7 +80,7 @@ if (url) {
 
   tabs.value = transformed.value.map(() => view.value);
 
-  if (actions.length === 1 && transformed.value[0].resultIsURL && route.query.openURL === '1') {
+  if (actions.length === 1 && transformed.value[0].resultIsURL && openURL) {
     window.location.href = transformed.value[0].url;
   }
 }
@@ -113,6 +114,18 @@ function permalink(transformed) {
 
 </script>
 <template>
+
+
+  <div class="alert alert-info d-flex align-items-center" v-if="openURL">
+    <div>
+      <div class="spinner-border text-info" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div class="ms-3">
+      You're being redirected. This might take a moment&hellip;
+    </div>
+  </div>
 
   <div v-for="t,i in transformed" :key="i" class="card mb-3">
     <div class="card-header d-flex justify-content-between align-items-center">
@@ -177,7 +190,7 @@ function permalink(transformed) {
              :class="{'text-truncate' : store.settings.cropURLsInURLView}">
           <div v-if="t.error" class="px-2 bg-warning-subtle text-warning rounded"><i
               class="bi bi-exclamation-octagon"></i> {{ t.error }}
-              <a href="#" @click.stop.prevent="tabs[i] = 'debug'"><i class="bi bi-bug"></i>debug</a>
+            <a href="#" @click.stop.prevent="tabs[i] = 'debug'"><i class="bi bi-bug"></i>debug</a>
           </div>
           <a :href="t.result" target="_blank">{{ t.result }}</a>
         </div>
@@ -198,7 +211,8 @@ function permalink(transformed) {
         <a href="#" class="btn btn-outline-primary" @click.stop.prevent="copy(t.url)"
            v-if="store.settings.showCopyButton">
           <i class="bi bi-copy"></i> Copy</a>
-        <a v-if="canShare && store.settings.showShareButton" href="#" class="btn btn-outline-primary" @click.stop.prevent="share(t.action.name, t.url)">
+        <a v-if="canShare && store.settings.showShareButton" href="#" class="btn btn-outline-primary"
+           @click.stop.prevent="share(t.action.name, t.url)">
           <i class="bi bi-share"></i> Share</a>
         <a class="btn btn-outline-primary" target="_blank" :href="t.url" v-if="store.settings.showOpenButton">
           <i class="bi bi-box-arrow-up-right"></i> Open</a>
