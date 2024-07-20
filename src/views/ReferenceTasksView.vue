@@ -3,6 +3,12 @@ import ReferenceTaskItem from "../components/ReferenceTaskItem.vue";
 </script>
 <template>
 
+  <p>Tasks are the building blocks of
+    <router-link :to="{name: 'referenceActions'}">actions</router-link>.
+    Each task receives an input, processes it and returns its output to the next task in the
+    action's sequence.
+  </p>
+
   <ReferenceTaskItem task-name="noop">
     <p>It really does nothing - it's the default task when creating a new action.</p>
   </ReferenceTaskItem>

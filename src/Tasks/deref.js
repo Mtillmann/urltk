@@ -1,5 +1,5 @@
 export default {
-    description: 'URL without referrer',
+    description: 'remove referrer',
     args: [],
     returns: 'URL',
     accepts: ['URL', 'String'],

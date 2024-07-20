@@ -11,9 +11,11 @@ const props = defineProps({
 const task = Transformer.tasks[props.taskName];
 </script>
 <template>
-  <div class="mb-3 card">
+  <div class="mb-3 card" :id="`task_${taskName}`">
     <div class="card-header">
-      <h2 class="mb-0 card-title display-8">{{ task.description }} &ndash; <code>{{ taskName }}</code></h2>
+      <h2 class="mb-0 card-title display-8">
+        <router-link :to="{name:'referenceTasks', hash:`#task_${taskName}`}"><i class="text-muted bi bi-link-45deg"></i></router-link>
+        {{ task.description }} &ndash; <code>{{ taskName }}</code></h2>
     </div>
     <div class="card-body pb-0">
       <table class="table small table-responsive table-sm">

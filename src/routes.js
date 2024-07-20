@@ -12,6 +12,7 @@ import ShareActionView from './views/ShareActionView.vue'
 import ImportActionsView from './views/ImportActionsView.vue'
 import BookmarkletView from './views/BookmarkletView.vue'
 import ReferenceTasksView from "./views/ReferenceTasksView.vue";
+import ReferenceActionsView from "./views/ReferenceActionsView.vue";
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -20,7 +21,7 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: HomeView,
-            meta: {inNavigation: true, title: 'URLtk'}
+            meta: {inNavigation: true, title: 'URL Toolkit'}
         },
         {
             path: '/url/:url?',
@@ -83,6 +84,12 @@ const router = createRouter({
             meta: {inNavigation: true, title: 'Reference'}
         },
         {
+            path: '/reference/actions',
+            name: 'referenceActions',
+            component: ReferenceActionsView,
+            meta: {inNavigation: false, title: 'Reference - Actions'}
+        },
+        {
             path: '/reference/tasks',
             name: 'referenceTasks',
             component: ReferenceTasksView,
@@ -90,6 +97,18 @@ const router = createRouter({
         }
 
     ]
+})
+
+router.beforeEach((to, from, next) => {
+    if(to.meta.title) {
+        document.title = `URLtk - ${to.meta.title}`
+    }
+
+    if(to.hash){
+        document.querySelector(to.hash)?.scrollIntoView()
+    }
+
+    next()
 })
 
 export default router

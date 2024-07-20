@@ -97,5 +97,26 @@ describe('MatchFilter', () => {
         expect(Transformer.filter(url, actions)).toBe(true);
     });
 
+    it('matches url regexp from documentation applies', () => {
+        const url = 'https://imdb.com/title/tt1234567/';
+        const actions = [
+            {
+                filter: 're:^https:\\/\\/[\w.]*imdb.com'
+            }
+        ];
+        expect(Transformer.filter(url, actions)).toBe(true);
+    });
+
+    it('matches url regexp from documentation applies with subdomain', () => {
+        const url = 'https://www.imdb.com/title/tt1234567/';
+        const actions = [
+            {
+                filter: 're:^https:\\/\\/[\w.]*imdb.com'
+            }
+        ];
+        expect(Transformer.filter(url, actions)).toBe(true);
+    });
+
+
 
 });
