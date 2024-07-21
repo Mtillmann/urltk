@@ -3,7 +3,7 @@
 </script>
 <template>
   <p>
-    Action receive a URL as input and run a defined set of tasks on it.
+    Actions receive a URL as input and run a defined set of tasks on it.
     The final output is displayed and can be opened, copied, shared etc.
   </p>
 
@@ -11,7 +11,7 @@
     URL Filter
   </h4>
   <p>
-    Actions can use a URL Filter that determines if they are apply to a given URL.
+    Actions can use a URL Filter that determines if they apply to a given URL.
     If a filter does not match, the action is omitted.
     If no action is applicable, you will be redirected to the home page with a notice.
   </p>
@@ -20,7 +20,7 @@
 
   <ul>
     <li>an empty string or <code>*</code> will match anything</li>
-    <li>any string will will be matched in the given URL. Example: <code>imdb.com</code> would match any URL that
+    <li>any string will be matched in the given URL. Example: <code>imdb.com</code> would match any URL that
       contains <em>imdb.com</em></li>
     <li>prefixing your filter with <code>re:</code> will match the given <em>Regexp</em> against the URL. Example:
       <code>re:^https:\/\/[w.]*imdb.com</code> would match any URL that starts with <em>https://imdb.com</em> or any
