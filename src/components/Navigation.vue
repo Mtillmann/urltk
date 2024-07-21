@@ -35,6 +35,7 @@ const isActive = (route) => {
       <template v-for="r,i in routes" :key="i">
         <router-link v-if="r.meta.inNavigation" class="pt-3 nav-link"
                      :class="{'active shadow':isActive(r)}" :to="r.path">
+          <i :class="`bi bi-${ r.meta.icon }`"></i>
           {{ r.meta.title }}
         </router-link>
       </template>

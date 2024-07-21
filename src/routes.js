@@ -21,90 +21,90 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: HomeView,
-            meta: {inNavigation: true, title: 'URL Toolkit'}
+            meta: {inNavigation: true, title: 'Home', icon: 'house'}
         },
         {
             path: '/url/:url?',
             name: 'url',
             component: URLView,
-            meta: {inNavigation: false, title: 'URL Results'}
+            meta: {inNavigation: false, title: 'URL Results', icon: 'card-list'}
         },
         {
             path: '/history/',
             name: 'history',
             component: HistoryView,
-            meta: {inNavigation: true, title: 'History'}
+            meta: {inNavigation: true, title: 'History', icon: 'clock-history'}
         },
         {
             path: '/actions',
             name: 'actions',
             component: ActionsView,
-            meta: {inNavigation: true, title: 'Actions'}
+            meta: {inNavigation: true, title: 'Actions', icon: 'wrench-adjustable'}
         },
         {
             path: '/actions/:id',
             name: 'editAction',
             component: EditActionView,
-            meta: {inNavigation: false, title: 'Edit Action'}
+            meta: {inNavigation: false, title: 'Edit Action', icon: 'wrench-adjustable'}
         },
         {
             path: '/settings',
             name: 'settings',
             component: SettingsView,
-            meta: {inNavigation: true, title: 'Settings'}
+            meta: {inNavigation: true, title: 'Settings', icon: 'gear'}
         },
         {
             path: '/deref',
             name: 'deref',
             component: DerefView,
-            meta: {inNavigation: false, title: 'Remove Referrer'}
+            meta: {inNavigation: false, title: 'Remove Referrer', icon: 'arrow-bar-right'}
         },
         {
             path: '/actions/:id/share',
             name: 'share',
             component: ShareActionView,
-            meta: {inNavigation: false, title: 'Share Action'}
+            meta: {inNavigation: false, title: 'Share Action', icon: 'share'}
         },
         {
             path: '/import-actions',
             name: 'importActions',
             component: ImportActionsView,
-            meta: {inNavigation: false, title: 'Import Action/s'}
+            meta: {inNavigation: false, title: 'Import Action/s', icon: 'file-arroww-up'}
         },
         {
             path: '/bookmarklet',
             name: 'bookmarklet',
             component: BookmarkletView,
-            meta: {inNavigation: false, title: 'Create Bookmarklet'}
+            meta: {inNavigation: false, title: 'Create Bookmarklet', icon: 'bookmark-check'}
         },
         {
             path: '/reference',
             name: 'reference',
             component: ReferenceView,
-            meta: {inNavigation: true, title: 'Reference'}
+            meta: {inNavigation: true, title: 'Reference', icon: 'book'}
         },
         {
             path: '/reference/actions',
             name: 'referenceActions',
             component: ReferenceActionsView,
-            meta: {inNavigation: false, title: 'Reference - Actions'}
+            meta: {inNavigation: false, title: 'Reference - Actions', icon: 'book'}
         },
         {
             path: '/reference/tasks',
             name: 'referenceTasks',
             component: ReferenceTasksView,
-            meta: {inNavigation: false, title: 'Reference - Tasks'}
+            meta: {inNavigation: false, title: 'Reference - Tasks', icon: 'book'}
         }
 
     ]
 })
 
 router.beforeEach((to, from, next) => {
-    if(to.meta.title) {
+    if (to.meta.title) {
         document.title = `URLtk - ${to.meta.title}`
     }
 
-    if(to.hash){
+    if (to.hash) {
         document.querySelector(to.hash)?.scrollIntoView()
     }
 

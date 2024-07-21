@@ -13,7 +13,9 @@ const route = useRoute();
       <div class="container-fluid container-md">
         <div class="row">
           <div class="col-12 py-4">
-            <h1 class="display-6">{{ route.meta.title }}</h1>
+            <h1 class="display-6">
+              <i :class="`bi bi-${ route.meta.icon }`"></i>
+              {{ route.meta.title }}</h1>
             <hr>
             <RouterView/>
           </div>
