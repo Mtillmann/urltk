@@ -9,7 +9,7 @@ const route = useRoute();
 const router = useRouter();
 
 const action = ref({});
-const tasks = ref([]);
+
 const position = route.query.position ?? 'bottom';
 const conflicts = ref([]);
 const {toast} = inject('toast');
@@ -22,12 +22,9 @@ if (route.params.id === 'new') {
     tasks: []
   }
 
-  tasks.value = [];
-
 } else {
   action.value = JSON.parse(JSON.stringify(store.actions[route.params.id]));
-  tasks.value = action.value.tasks.map((t) => t.name);
-  conflicts.value = checkTypeConflicts(tasks.value);
+  conflicts.value = checkTypeConflicts(action.value.tasks.map((t) => t.name));
 }
 
 function saveAction() {
@@ -36,24 +33,6 @@ function saveAction() {
 
   router.push('/actions');
 }
-
-
-watch(tasks.value, (newVal) => {
-  return;
-  for (let i = 0; i < newVal.length; i++) {
-    const taskName = newVal[i];
-    if (!action.value.tasks[i] || action.value.tasks[i].name !== taskName) {
-      action.value.tasks[i] = {
-        name: taskName,
-        args: Transformer.tasks[taskName].args.map((a) => a.default ?? '')
-      }
-    }
-  }
-
-  conflicts.value = checkTypeConflicts(newVal);
-
-});
-
 
 function unshift() {
   action.value.tasks.unshift({
@@ -177,7 +156,7 @@ function resetArgs(index) {
   </template>
 
 
-  <template v-if="tasks.length > 0">
+  <template v-if="action.tasks.length > 0">
     <hr>
 
     <div class="d-flex justify-content-center">
