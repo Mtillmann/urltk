@@ -37,7 +37,9 @@ function saveAction() {
   router.push('/actions');
 }
 
+
 watch(tasks.value, (newVal) => {
+  return;
   for (let i = 0; i < newVal.length; i++) {
     const taskName = newVal[i];
     if (!action.value.tasks[i] || action.value.tasks[i].name !== taskName) {
@@ -51,6 +53,44 @@ watch(tasks.value, (newVal) => {
   conflicts.value = checkTypeConflicts(newVal);
 
 });
+
+watch(() => action.value.tasks, (newVal, oldVal) => {
+
+  console.log(oldVal, newVal);
+
+  for(let i = 0; i < newVal.length; i++) {
+    if (newVal[i].name !== oldVal[i].name) {
+      console.log('changed', key);
+    }
+  }
+
+  console.log('action changed');
+  conflicts.value = checkTypeConflicts(tasks.value);
+}, {deep: true});
+
+function unshift() {
+  action.value.tasks.unshift({
+    name: 'noop',
+    args: Transformer.tasks['noop'].args.map((a) => a.default ?? '')
+  });
+
+  tasks.value = action.value.tasks.map((t) => t.name);
+  conflicts.value = checkTypeConflicts(tasks.value);
+}
+
+function splice(index) {
+
+  action.value.tasks.splice(index, 0, {
+    name: 'noop',
+    args: Transformer.tasks['noop'].args.map((a) => a.default ?? '')
+  });
+}
+
+function remove(index) {
+
+  action.value.tasks.splice(index, 1);
+}
+
 
 </script>
 <template>
@@ -66,7 +106,7 @@ watch(tasks.value, (newVal) => {
   </div>
 
   <div class="mb-3 d-flex justify-content-center">
-    <button @click="tasks.unshift('noop')" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i> Add
+    <button @click="unshift()" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i> Add
       Task
     </button>
   </div>
@@ -82,7 +122,7 @@ watch(tasks.value, (newVal) => {
         <div class="d-flex">
           <div class="form-floating flex-grow-1">
             <select class="form-select" :id="`task_${i}`" aria-label="Action"
-                    v-model="tasks[i]">
+                    v-model="action.tasks[i].name">
               <optgroup v-for="group, groupname in Transformer.grouped" :label="groupname">
                 <option v-for="transformer, key in group" :value="key">{{
                     transformer.description
@@ -93,29 +133,29 @@ watch(tasks.value, (newVal) => {
             <label :for="`task_${i}`">Task</label>
           </div>
           <button v-if="action.tasks.length > 1"
-                  @click="action.tasks.splice(i, 1), tasks.splice(i, 1)"
+                  @click="remove(i)"
                   class="ms-2 btn btn-outline-danger"><i class="bi bi-trash"></i></button>
         </div>
         <p class="small text-muted mb-0 mt-2 d-none">{{
-            Transformer.tasks[action.tasks[i].name].description
+            Transformer.tasks[task.name].description
           }}</p>
         <div class="small d-none">
           <kbd class="bg-info"><i class="bi bi-box-arrow-in-right"></i> {{
-              Transformer.tasks[action.tasks[i].name].accepts.join('|')
+              Transformer.tasks[task.name].accepts.join('|')
             }}</kbd>
           <kbd class="bg-success ms-2"><i class="bi bi-box-arrow-right"></i> {{
-              Transformer.tasks[action.tasks[i].name].returns
+              Transformer.tasks[task.name].returns
             }}</kbd>
         </div>
 
       </div>
       <div class="card-body pb-0"
-           v-if="Transformer.tasks[action.tasks[i].name].args.length !== 0">
-        <template v-for="a, j in Transformer.tasks[action.tasks[i].name].args" :key="j">
+           v-if="Transformer.tasks[task.name].args.length !== 0">
+        <template v-for="a, j in Transformer.tasks[task.name].args" :key="j">
           <template v-if="!('type' in a) || a.type === 'input'">
             <div class="form-floating" :class="{'mb-3': !a.hint}">
               <input type="text" autocomplete="off" class="form-control form-control-sm" :id="`arg_${i}_${j}`"
-                     :placeholder="a.name" v-model="action.tasks[i].args[j]"/>
+                     :placeholder="a.name" v-model="task.args[j]"/>
               <label :for="`arg_${i}_${j}`">{{ a.name }}</label>
             </div>
 
@@ -123,7 +163,7 @@ watch(tasks.value, (newVal) => {
           <template v-else-if="a.type === 'checkbox'">
             <div class="form-check">
               <input class="form-check-input" type="checkbox"
-                     v-model.bool="action.tasks[i].args[j]" :id="`arg_${i}_${j}`">
+                     v-model.bool="task.args[j]" :id="`arg_${i}_${j}`">
               <label class="form-check-label" :for="`arg_${i}_${j}`">
                 {{ a.name }}
               </label>
@@ -136,7 +176,7 @@ watch(tasks.value, (newVal) => {
     </div>
 
     <div class="d-flex my-3 justify-content-center">
-      <button @click="tasks.splice(i+1, 0, 'noop')" class="btn btn-outline-primary"><i
+      <button @click="splice(i+1)" class="btn btn-outline-primary"><i
           class="bi bi-plus-lg"></i>Add Task
       </button>
     </div>
