@@ -54,19 +54,6 @@ watch(tasks.value, (newVal) => {
 
 });
 
-watch(() => action.value.tasks, (newVal, oldVal) => {
-
-  console.log(oldVal, newVal);
-
-  for(let i = 0; i < newVal.length; i++) {
-    if (newVal[i].name !== oldVal[i].name) {
-      console.log('changed', key);
-    }
-  }
-
-  console.log('action changed');
-  conflicts.value = checkTypeConflicts(tasks.value);
-}, {deep: true});
 
 function unshift() {
   action.value.tasks.unshift({
@@ -74,8 +61,8 @@ function unshift() {
     args: Transformer.tasks['noop'].args.map((a) => a.default ?? '')
   });
 
-  tasks.value = action.value.tasks.map((t) => t.name);
-  conflicts.value = checkTypeConflicts(tasks.value);
+
+  conflicts.value = checkTypeConflicts(action.value.tasks.map((t) => t.name));
 }
 
 function splice(index) {
@@ -84,11 +71,18 @@ function splice(index) {
     name: 'noop',
     args: Transformer.tasks['noop'].args.map((a) => a.default ?? '')
   });
+
+  conflicts.value = checkTypeConflicts(action.value.tasks.map((t) => t.name));
 }
 
 function remove(index) {
 
   action.value.tasks.splice(index, 1);
+  conflicts.value = checkTypeConflicts(action.value.tasks.map((t) => t.name));
+}
+
+function resetArgs(index) {
+  action.value.tasks[index].args = Transformer.tasks[action.value.tasks[index].name].args.map((a) => a.default ?? '');
 }
 
 
@@ -122,7 +116,7 @@ function remove(index) {
         <div class="d-flex">
           <div class="form-floating flex-grow-1">
             <select class="form-select" :id="`task_${i}`" aria-label="Action"
-                    v-model="action.tasks[i].name">
+                    v-model="action.tasks[i].name" @change="resetArgs(i)">
               <optgroup v-for="group, groupname in Transformer.grouped" :label="groupname">
                 <option v-for="transformer, key in group" :value="key">{{
                     transformer.description
