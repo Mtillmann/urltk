@@ -1,7 +1,7 @@
 export default {
 
     description: 'remove the entire #hash',
-    returns: 'URL',
+    returns: ['URL'],
     accepts: ['URL'],
     args: [],
     apply(url) {

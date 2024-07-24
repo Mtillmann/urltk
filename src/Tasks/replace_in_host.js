@@ -6,7 +6,7 @@ export default {
         {name: 'replace'},
         {name: 'replace all', type: 'checkbox', default: true}
     ],
-    returns: 'URL',
+    returns: ['URL'],
     accepts: ['URL'],
     apply(url, search, replace, all) {
 

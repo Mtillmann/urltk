@@ -6,10 +6,15 @@ export default {
         {name: 'replace'},
         {name: 'flags'}
     ],
-    returns: 'URL',
-    accepts: ['URL'],
-    apply(url, search, replace, flags = 'i') {
+    returns: ['URL', 'String'],
+    accepts: ['URL', 'String'],
+    apply(input, search, replace, flags = 'i') {
         const regex = new RegExp(search, flags);
-        return new URL(url.href.replace(regex, replace));
+        try {
+            return new URL(input.href.replace(regex, replace));
+        }
+        catch (e) {
+            return String(input).replace(regex, replace);
+        }
     }
 }

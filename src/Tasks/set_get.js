@@ -2,7 +2,7 @@ export default {
 
     description: 'set GET parameters',
     args: [{name: 'key-value pairs', hint: 'key=value[,foo=bar,...]'}],
-    returns: 'URL',
+    returns: ['URL'],
     accepts: ['URL'],
     apply(url, pairs) {
         if ([undefined, null, ''].includes(pairs)) {

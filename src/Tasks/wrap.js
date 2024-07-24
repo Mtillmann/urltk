@@ -6,7 +6,7 @@ export default {
         default: true,
         hint: 'encode the input'
     }],
-    returns: 'String',
+    returns: ['String'],
     accepts: ['String', 'URL'],
     apply(replace, targetString, encode = true) {
         targetString = String(targetString);

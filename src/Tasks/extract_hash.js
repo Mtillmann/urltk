@@ -2,7 +2,7 @@ export default {
 
     description: 'extract hash',
     args: [],
-    returns: 'String',
+    returns: ['String'],
     accepts: ['URL'],
 
     apply(url, keepHashSymbol = false) {

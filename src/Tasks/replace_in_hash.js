@@ -6,7 +6,7 @@ export default {
         hint: 'empty to replace all, single ^ to prepend, single $ to append'
     }, {name: 'replace'},
         {name: 'replace all', type: 'checkbox', default: true}],
-    returns: 'URL',
+    returns: ['URL'],
     accepts: ['URL'],
 
     apply(url, search, replace, all) {

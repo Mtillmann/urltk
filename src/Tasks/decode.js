@@ -1,7 +1,7 @@
 export default {
     description: 'decode',
     args: [],
-    returns: 'String',
+    returns: ['String'],
     accepts: ['String', 'URL'],
     apply(input) {
         return decodeURIComponent(input.href ?? input);

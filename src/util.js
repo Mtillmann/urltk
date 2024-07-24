@@ -74,9 +74,10 @@ export function checkTypeConflicts(tasks) {
     const conflicts = [false];
 
     for (let i = 1; i < tasks.length; i++) {
-        const previousTaskReturn = new Set([Transformer.tasks[tasks[i - 1]].returns]);
+        const previousTaskReturn = new Set(Transformer.tasks[tasks[i - 1]].returns);
         const currentTaskAccepts = new Set(Transformer.tasks[tasks[i]].accepts);
         const diff = previousTaskReturn.difference(currentTaskAccepts);
+
 
         if (diff.size === 0) {
             conflicts.push(false);

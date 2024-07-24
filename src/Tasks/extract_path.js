@@ -2,7 +2,7 @@ export default {
 
     description: 'Extract path',
     args: [{name: 'segment', hint: 'zero-based segment, list of segments or empty to get whole path'}],
-    returns: 'String',
+    returns: ['String'],
     accepts: ['URL'],
     apply(url, segment = null) {
         const path = url.pathname.replace(/^\//, '');

@@ -51,7 +51,7 @@ export default {
 
     description: 'delete tracking parameters',
     args: [],
-    returns: 'URL',
+    returns: ['URL'],
     accepts: ['URL'],
     apply(url) {
         return remove_get.apply(url, forbiddenGetParams.join(', '));

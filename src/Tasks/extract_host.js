@@ -2,7 +2,7 @@ export default {
 
     description: 'extract domain',
     args: [{name: 'segment', hint: 'zero-based segment, list of segments or empty to get whole domain'}],
-    returns: 'String',
+    returns: ['String'],
     accepts: ['URL'],
 
     apply(url, segment = null) {

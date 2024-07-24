@@ -12,7 +12,7 @@ export default {
 
     description: 'remove GET parameters',
     args: [{name: 'keys', hint: 'comma-separated keys. Use * as wildcard, e.g. utm_*. Empty value removes all.'}],
-    returns: 'URL',
+    returns: ['URL'],
     accepts: ['URL'],
     apply(url, keys) {
         if ([undefined, null, ''].includes(keys)) {
