@@ -19,6 +19,7 @@ const useNewWindow = ref(false);
 const openURL = ref(false);
 const label = ref('URLtk');
 const canShare = 'share' in navigator;
+const addTitle = ref(false);
 
 if (actionId && store.actions[actionId]) {
   selectedActions.value[actionId] = true;
@@ -69,7 +70,13 @@ const canOpenURL = computed(() => {
 
 const code = computed(() => {
   const link = new URL(location.origin + location.pathname);
-  let hash = '#/url/\${encodeURIComponent(location.href)}';
+
+  let href = 'const {href}=location;';
+  if(addTitle.value) {
+    href = `const url=new URL(location.href);url.searchParams.set('___URLtk_title', document.title);const href=url.href;`;
+  }
+
+  let hash = '#/url/\${encodeURIComponent(href)}';
   const query = []
   if (['single-action', 'multi-action'].includes(mode.value)) {
     const actions = selectedActions.value
@@ -89,8 +96,11 @@ const code = computed(() => {
 
   link.hash = hash;
 
+
+
   return [
     'javascript:(_=>{',
+    href,
     useNewWindow.value ? 'window.open(`' : 'location.href=`',
     link,
     useNewWindow.value ? '`);' : '`;',
@@ -172,7 +182,6 @@ const share = () => {
       </label>
     </div>
 
-
     <div class="form-check">
       <input :disabled="!canOpenURL" class="form-check-input" type="checkbox" v-model="openURL" value=""
              id="openURL">
@@ -183,6 +192,18 @@ const share = () => {
     <p>The resulting URL of the action is opened. If no URL is derived, the action default view is shown.
       Only available when a single action is selected.
     </p>
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" v-model="addTitle" value=""
+             id="addTitle">
+      <label class="form-check-label" for="addTitle">
+        Add Document Title
+      </label>
+    </div>
+    <p>The document title is added to the URLs query string as <code>___URLtk_title</code>. Useful if the action
+      requires the title of the current page.
+    </p>
+
 
     <div class="input-group mb-3">
 

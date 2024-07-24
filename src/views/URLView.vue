@@ -60,10 +60,10 @@ if (url) {
       .map(action => {
         const transformed = Transformer.run(url, action.tasks);
         let result = transformed.url;
-        let resultIsURL = false;
+        let isURL = false;
         try {
           result = new URL(result);
-          resultIsURL = true;
+          isURL = true;
         } catch (e) {
           // ignore
         }
@@ -80,7 +80,7 @@ if (url) {
         return {
           ...transformed,
           result,
-          resultIsURL,
+          isURL,
           action,
           diff,
           deflated: btoa(JSON.stringify([deflateAction(action)]))
@@ -90,7 +90,7 @@ if (url) {
 
   tabs.value = transformed.value.map(() => view.value);
 
-  if (actions.length === 1 && transformed.value[0].resultIsURL && openURL) {
+  if (actions.length === 1 && transformed.value[0].isURL && openURL) {
     window.location.href = transformed.value[0].url;
   }
 }
@@ -126,7 +126,7 @@ function permalink(transformed) {
 <template>
 
 
-  <div class="alert alert-info d-flex align-items-center" v-if="openURL">
+  <div class="alert alert-info d-flex align-items-center" v-if="actions.length === 1 && transformed[0].isURL">
     <div>
       <div class="spinner-border text-info" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -148,7 +148,8 @@ function permalink(transformed) {
         <ul class="dropdown-menu">
           <li>
             <a class="dropdown-item" href="#" @click.stop.prevent="tabs[i] = 'url'">
-              Show URL
+              Show <template v-if="t.isURL">URL</template><template v-else>Result</template>
+
             </a>
           </li>
           <li>
@@ -202,7 +203,8 @@ function permalink(transformed) {
               class="bi bi-exclamation-octagon"></i> {{ t.error }}
             <a href="#" @click.stop.prevent="tabs[i] = 'debug'"><i class="bi bi-bug"></i>debug</a>
           </div>
-          <a :href="t.result" target="_blank">{{ t.result }}</a>
+          <a v-if="t.isURL" :href="t.result" target="_blank">{{ t.result }}</a>
+          <span v-else>{{ t.result }}</span>
         </div>
         <div class="diff" v-if="tabs[i] === 'diff'" v-html="t.diff"></div>
         <div class="debug" v-if="tabs[i] === 'debug'">
@@ -214,7 +216,7 @@ function permalink(transformed) {
       <div class="btn-group w-100">
         <a href="#" class="btn btn-outline-primary" :class="{'active' : tabs[i] === 'url'}"
            @click.stop.prevent="tabs[i] = 'url'">
-          <i class="bi bi-link"></i> URL</a>
+          <i class="bi" :class="{'bi-link' : t.isURL, 'bi-quote' : !t.isURL}"></i> <template v-if="t.isURL">URL</template><template v-else>Result</template></a>
         <a href="#" class="btn btn-outline-primary" :class="{'active' : tabs[i] === 'diff'}"
            @click.stop.prevent="tabs[i] = 'diff'" v-if="store.settings.showDiffButton">
           <i class="bi bi-file-diff"></i> Diff</a>
@@ -224,7 +226,7 @@ function permalink(transformed) {
         <a v-if="canShare && store.settings.showShareButton" href="#" class="btn btn-outline-primary"
            @click.stop.prevent="share(t.action.name, t.url)">
           <i class="bi bi-share"></i> Share</a>
-        <a class="btn btn-outline-primary" target="_blank" :href="t.url" v-if="store.settings.showOpenButton">
+        <a class="btn btn-outline-primary" target="_blank" :href="t.url" v-if="t.isURL && store.settings.showOpenButton">
           <i class="bi bi-box-arrow-up-right"></i> Open</a>
       </div>
     </div>
@@ -233,13 +235,13 @@ function permalink(transformed) {
   <div v-if="unmatched.length > 0" class="alert alert-info small">
 
     <i class="bi bi-info-circle me-2"></i>Actions omitted because their URL filter did not match:
-      <template v-for="action, i in unmatched" :key="i">
-        <em>{{ action.name }}</em><template v-if="i < unmatched.length - 1">, </template>
+    <template v-for="action, i in unmatched" :key="i">
+      <em>{{ action.name }}</em>
+      <template v-if="i < unmatched.length - 1">,</template>
 
-      </template>
+    </template>
 
   </div>
-
 
 
 </template>
