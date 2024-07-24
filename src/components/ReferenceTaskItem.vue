@@ -22,11 +22,11 @@ const task = Transformer.tasks[props.taskName];
         <tbody>
           <tr>
             <th scope="row" class="w-0">Accepts</th>
-            <td><code>{{ task.accepts.join('|') }}</code></td>
+            <td><code>{{ task.accepts.join(' | ') }}</code></td>
           </tr>
           <tr>
             <th scope="row" class="w-0">Returns</th>
-            <td><code>{{ task.returns }}</code></td>
+            <td><code>{{ task.returns.join(' | ') }}</code></td>
           </tr>
         </tbody>
       </table>

@@ -21,25 +21,7 @@ const defaultState = {
         derefInNewTab: 'pwa-only',
     },
     history: [],
-    actions: [
-        {
-            actionVersion: 1,
-            guid: "dadf4b1e-0b1b-4b1b-8b1b-0b1b4b1b4b1b",
-            version: 1,
-            name: "No Tracking and referrer",
-            filter: '',
-            tasks: [
-                {
-                    name: "detrack",
-                    args: []
-                },
-                {
-                    name: "deref",
-                    args: []
-                }
-            ]
-        }
-    ]
+    actions: []
 
 }
 
