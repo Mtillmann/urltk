@@ -21,6 +21,7 @@ const transformed = ref([]);
 const isUsingQueryActions = ref(false);
 const view = ref(route.query.view || 'url');
 const tabs = ref([]);
+const unmatched = ref([]);
 
 let url;
 try {
@@ -44,9 +45,18 @@ if (!Transformer.filter(url, actions)) {
 
 if (url) {
   store.pushHistory(url);
+
   transformed.value = actions
       .map((action, i) => ({...action, index: i}))
-      .filter(action => Transformer.filter(url, [action]))
+      .filter(action => {
+        const matches = Transformer.filter(url, [action]);
+
+        if (!matches) {
+          unmatched.value.push(action);
+        }
+
+        return matches;
+      })
       .map(action => {
         const transformed = Transformer.run(url, action.tasks);
         let result = transformed.url;
@@ -219,6 +229,19 @@ function permalink(transformed) {
       </div>
     </div>
   </div>
+
+  <div v-if="unmatched.length > 0" class="alert alert-info small">
+
+    <i class="bi bi-info-circle me-2"></i>Actions omitted because their URL filter did not match:
+      <template v-for="action, i in unmatched" :key="i">
+        <em>{{ action.name }}</em><template v-if="i < unmatched.length - 1">, </template>
+
+      </template>
+
+  </div>
+
+
+
 </template>
 
 <style>
