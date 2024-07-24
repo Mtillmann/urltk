@@ -6,7 +6,7 @@ export default {
         default: true,
         hint: 'encode the input'
     }],
-    returns: ['String'],
+    returns: ['String', 'URL'],
     accepts: ['String', 'URL'],
     apply(replace, targetString, encode = true) {
         targetString = String(targetString);
@@ -16,6 +16,12 @@ export default {
         replace = String(replace);
         replace = encode ? encodeURIComponent(replace) : replace;
 
-        return targetString.replace('$1', replace);
+        try{
+            return new URL(targetString.replace('$1', replace));
+        }
+        catch(e){
+            return targetString.replace('$1', replace);
+        }
+
     }
 }

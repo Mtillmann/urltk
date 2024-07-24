@@ -138,7 +138,7 @@ function permalink(transformed) {
     or check out the <router-link :to="{name: 'reference'}">reference</router-link>.
   </div>
 
-  <div class="alert alert-info d-flex align-items-center" v-if="actions.length === 1 && transformed[0].isURL">
+  <div class="alert alert-info d-flex align-items-center" v-if="openURL && actions.length === 1 && transformed[0].isURL">
     <div>
       <div class="spinner-border text-info" role="status">
         <span class="visually-hidden">Loading...</span>

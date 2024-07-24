@@ -1,9 +1,11 @@
 <script setup>
-import {useRoute} from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 import {isPwa} from "../util";
 import {inject, ref} from "vue";
 
 const route = useRoute();
+const router = useRouter();
+
 const url = route.query.url;
 const {settings} = inject('store');
 const {toast} = inject('toast');

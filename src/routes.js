@@ -13,6 +13,7 @@ import ImportActionsView from './views/ImportActionsView.vue'
 import BookmarkletView from './views/BookmarkletView.vue'
 import ReferenceTasksView from "./views/ReferenceTasksView.vue";
 import ReferenceActionsView from "./views/ReferenceActionsView.vue";
+import ReferenceDDGView from "./views/ReferenceDDGView.vue";
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -94,6 +95,12 @@ const router = createRouter({
             name: 'referenceTasks',
             component: ReferenceTasksView,
             meta: {inNavigation: false, title: 'Reference - Tasks', icon: 'book'}
+        },
+        {
+            path: '/reference/duckduckgo',
+            name: 'referenceDDG',
+            component: ReferenceDDGView,
+            meta: {inNavigation: false, title: 'Reference - DuckDuckGo', icon: 'plugin'}
         }
 
     ]

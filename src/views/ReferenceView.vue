@@ -10,6 +10,7 @@
   <p>
     Read more on <router-link :to="{name: 'referenceTasks'}">tasks</router-link>
     and <router-link :to="{name: 'referenceActions'}">actions</router-link>.
+    Also checkout how to make most of URLtk by connecting services using <router-link :to="{name: 'referenceDDG'}">DuckDuckGo and the <code>wrap</code>-Task</router-link>.
   </p>
 
   <h4 class="display-8">
