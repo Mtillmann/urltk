@@ -47,4 +47,10 @@ describe('replace_in_path transformer', () => {
         const result = replace_in_path.apply(url, '$', 'qux');
         expect(result.pathname).toBe('/foo/bar/bazqux');
     });
+
+    it('replaces all occurrences when all is true', () => {
+        const url = new URL('https://example.com/foofoofoo');
+        const result = replace_in_path.apply(url, 'foo', 'bar', true);
+        expect(result.pathname).toBe('/barbarbar');
+    });
 });

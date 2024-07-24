@@ -41,4 +41,10 @@ describe('replace_in_host transformer', () => {
         const result = replace_in_host.apply(url, '$', 'bar');
         expect(result.host).toBe('example.combar');
     });
+
+    it('replaces all occurrences when all is true', () => {
+        const url = new URL('https://example.com');
+        const result = replace_in_host.apply(url, 'e', 'a', true);
+        expect(result.host).toBe('axampla.com');
+    });
 });

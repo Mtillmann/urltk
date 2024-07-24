@@ -47,4 +47,10 @@ describe('replace_in_hash transformer', () => {
         const result = replace_in_hash.apply(url, '$', 'bar');
         expect(result.hash).toBe('#hashbar');
     });
+
+    it('replaces all occurrences when all is true', () => {
+        const url = new URL('https://example.com#foofoofoo');
+        const result = replace_in_hash.apply(url, 'foo', 'bar', true);
+        expect(result.hash).toBe('#barbarbar');
+    });
 });

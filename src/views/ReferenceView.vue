@@ -15,16 +15,19 @@
   <h4 class="display-8">
     Privacy
   </h4>
-  <p>
-    URLtk does not store any data.
+  <p class="lead">
+    URLtk does not store or share any data.
   </p>
   <p>
     All actions are stored and run locally in your browser.
     If you share an action, the action is embedded in the URL and the recipient can import the action to their own instance of URLtk.
   </p>
   <p>
-    Since URLtk uses vue-router's hash mode, neither the action nor the URL is sent to the server.
-    This means that not even github.io's frontend server will see the action or the URL you are working with.
+    Since URLtk uses vue-router's hash mode, neither actions or URLs are sent to the server.
+    Even github.io's frontend server won't see the action or the URL you are working with.
+  </p>
+  <p>
+    Also, since the hash is not sent to the server, it is not part of the referrer header that your browser sends to the destination web-server.
   </p>
   <p>
     Likewise, no URL or action data is sent to or visible by any third-party service.

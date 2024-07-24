@@ -134,7 +134,7 @@ function resetArgs(index) {
 
           </template>
           <template v-else-if="a.type === 'checkbox'">
-            <div class="form-check">
+            <div class="form-check mb-3">
               <input class="form-check-input" type="checkbox"
                      v-model.bool="task.args[j]" :id="`arg_${i}_${j}`">
               <label class="form-check-label" :for="`arg_${i}_${j}`">
