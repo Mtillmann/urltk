@@ -71,12 +71,12 @@ const canOpenURL = computed(() => {
 const code = computed(() => {
   const link = new URL(location.origin + location.pathname);
 
-  let href = 'const {href}=location;';
+  let href = 'const url=new URL(location);';
   if(addTitle.value) {
-    href = `const url=new URL(location.href);url.searchParams.set('___URLtk_title', document.title);const href=url.href;`;
+    href += `url.searchParams.set('___URLtk_title', document.title);`;
   }
 
-  let hash = '#/url/\${encodeURIComponent(href)}';
+  let hash = '#/url/\${encodeURIComponent(url.href)}';
   const query = []
   if (['single-action', 'multi-action'].includes(mode.value)) {
     const actions = selectedActions.value
