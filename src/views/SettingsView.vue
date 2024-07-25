@@ -63,7 +63,7 @@ function importActions(event) {
 </script>
 <template>
 
-  <h5 class="display-7">UI</h5>
+  <h5 class="display-8">UI</h5>
 
   <div class="form-floating">
     <select class="form-select" @change="store.setTheme()" id="theme" aria-label="Theme" v-model="settings.theme">
@@ -74,7 +74,7 @@ function importActions(event) {
     <label for="theme">Theme</label>
   </div>
 
-  <h5 class="display-7 mt-4">URL View</h5>
+  <h5 class="display-8 mt-4">URL View</h5>
 
   <div class="form-check form-switch mb-4">
     <input class="form-check-input" v-model="settings.showURLControls" type="checkbox" role="switch"
@@ -104,7 +104,7 @@ function importActions(event) {
     <label class="form-check-lable" for="cropURLsInURLView">Truncate URLs</label>
   </div>
 
-  <h5 class="display-7 mt-4">History View</h5>
+  <h5 class="display-8 mt-4">History View</h5>
 
   <div class="form-check form-switch mb-4">
     <input class="form-check-input" v-model="settings.cropURLsInHistoryView" type="checkbox" role="switch"
@@ -116,7 +116,7 @@ function importActions(event) {
   <input type="range" class="form-range" id="historyLimit" v-model.number="settings.historyLimit" min="0" max="255">
   <p class="small">Set to 0 to disable</p>
 
-  <h5 class="display-7 mt-4">Deref View</h5>
+  <h5 class="display-8 mt-4">Deref View</h5>
 
   <label for="derefInNewTabPWAOnly" class="form-label">Open Links in new Tab/Window</label>
   <div class="form-check">
@@ -138,7 +138,7 @@ function importActions(event) {
     </label>
   </div>
 
-  <h5 class="display-7 mt-4">Actions</h5>
+  <h5 class="display-8 mt-4">Actions</h5>
 
   <button class="d-block mx-auto my-3 btn btn-outline-secondary" @click="exportJSON">
     <i class="bi bi-filetype-json"></i>

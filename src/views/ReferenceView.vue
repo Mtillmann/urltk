@@ -2,7 +2,7 @@
 
 </script>
 <template>
-  <p>
+  <p class="lead">
     URLtk is a simple tool that allows you to transform URLs with a set of predefined tasks.
     Use it to extract information, convert URLs, or automate repetitive tasks.
   </p>
@@ -10,8 +10,10 @@
   <p>
     Read more on <router-link :to="{name: 'referenceTasks'}">tasks</router-link>
     and <router-link :to="{name: 'referenceActions'}">actions</router-link>.
-    Also checkout how to make most of URLtk by connecting services using <router-link :to="{name: 'referenceDDG'}">DuckDuckGo and the <code>wrap</code>-Task</router-link>.
+    <br>
+    Also check out how to make most of URLtk by connecting services using <router-link :to="{name: 'referenceDDG'}">DuckDuckGo and the <code>wrap</code>-Task</router-link>.
   </p>
+
 
   <h4 class="display-8">
     Privacy
@@ -37,6 +39,21 @@
     Since no backend exists, there is also no way to limit or censor actions or URLs - anything you share
     or click only exists in your browser address bar.
   </p>
+
+  <h4 class="display-8">
+    Disclaimer
+  </h4>
+  <p>
+    The URLs processed by this web application are submitted by users. The creators and operators of this web application do not endorse, verify, or take responsibility for the content of these URLs. By using this web application, users acknowledge that they are solely responsible for the URLs they submit and the content they access.
+  </p>
+  <p>
+    We strongly advise users to ensure that their submissions comply with all relevant laws, regulations, and guidelines. The creators and operators of this web application disclaim any liability for any harm or damages resulting from the use of this web application or the content accessed through it.
+  </p>
+  <p>
+    Users are encouraged to exercise caution and use this service responsibly. If you have any concerns about the content or the use of this service, please discontinue use immediately.
+
+  </p>
+
 
 
 </template>

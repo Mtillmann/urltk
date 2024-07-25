@@ -39,7 +39,7 @@ const dl = () => {
 </script>
 <template>
 
-  <h4 class="display-7">&bdquo;{{ action.name }}&rdquo;</h4>
+  <h4 class="display-8">&bdquo;{{ action.name }}&rdquo;</h4>
 
   <p>
     The link will allow you to share this action with others.
