@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -31,45 +31,45 @@
             targetURL.hash = `#/url/${encodeURIComponent(urlToProcess)}`;
 
             setTimeout(() => {
-                document.getElementById('waiting').style.display = 'none';
-                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('waiting').classList.add('d-none');
+                document.getElementById('errorMessage').classList.remove('d-none');
             }, 2000);
 
             location.replace(targetURL.href);
         });
     </script>
     <style>
-        html, body {
-            background-color: #808080;
+        html, body{
+            width:100dvw;
+            height:100dvh;
+            position: relative;
         }
-
-        #errorMessage {
-            display: none;
-        }
-
-        #waiting {
-            font-size: 5em;
-            text-align: center;
-            margin-top: 50vh;
-            transform: translateY(-50%);
-        }
-
-        #errorMessage {
-            text-align: center;
-            color: white;
-            font-size: 1.5em;
-            margin-top: 50vh;
-            transform: translateY(-50%);
-        }
-
     </style>
 </head>
 <body>
-<div id="waiting">⏳</div>
-<p id="errorMessage">
-    This is the share-target used by the PWA. If you see this message, something has gone wrong :(
-    <br>
-    <a href="/urltk/">Click here to go back to the app</a>
-</p>
+
+<div class="position-absolute top-50 start-50  translate-middle">
+
+    <div id="waiting" class="alert alert-info d-flex align-items-center">
+        <div>
+            <div class="spinner-border text-info" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="ms-3">
+            Redirecting...
+        </div>
+    </div>
+
+    <p id="errorMessage" class="d-none">
+        This is the URLtk's PWA share-target. If you see this message, something has gone wrong :(
+        <br>
+        <a href="/urltk/">Click here to go back to the app</a>
+    </p>
+
+</div>
+
+
+
 </body>
 </html>

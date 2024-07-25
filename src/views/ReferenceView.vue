@@ -14,6 +14,23 @@
     Also check out how to make most of URLtk by connecting services using <router-link :to="{name: 'referenceDDG'}">DuckDuckGo and the <code>wrap</code>-Task</router-link>.
   </p>
 
+  <h4 class="display-8">
+    Android Share Target
+  </h4>
+
+  <p>On Android (using chrome) you can install the pwa, either through the install-notification or by opening
+  the browser menu, then clicking "add to homescreen" and select "install".</p>
+
+  <p>"URLtk" is now part of your share dialog. When you share an URL to URLtk, the regular URL landing page is shown</p>
+
+  <h4 class="display-8">
+    iOS Shortcut
+  </h4>
+
+  <p>tdb...</p>
+
+
+
 
   <h4 class="display-8">
     Privacy
