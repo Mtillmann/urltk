@@ -131,8 +131,10 @@ const share = () => {
        href="#" @click.stop.prevent="tab = t">{{ t }}</a>
   </nav>
 
+
+
   <div v-if="tab === 'Actions'">
-    <h4 class="display-6">All Actions</h4>
+    <h4 class="display-8">All Actions</h4>
     <div class="list-group list-group-flush">
       <div class="list-group-item">
         <div class="form-check mb-3">
@@ -150,7 +152,7 @@ const share = () => {
     </p>
 
     <template v-if="selectedActions.length > 0">
-      <h4 class="display-6">Selected Actions</h4>
+      <h4 class="display-8">Selected Actions</h4>
 
       <div class="list-group list-group-flush mb-3">
         <div class="list-group-item" v-for="action, i in store.actions" :key="i">
@@ -166,7 +168,8 @@ const share = () => {
       <p>
         <a href="#" @click.stop.prevent="selectAll">Select all actions</a> to create a portable copy of your URL
         landing page.
-        All selected actions in their current state are embedded in the bookmarklet's URL.
+        All selected actions in their current state are embedded in the bookmarklet's URL and can
+        be imported when viewing the URL landing page.
       </p>
 
     </template>
@@ -175,12 +178,15 @@ const share = () => {
   </div>
 
   <div v-if="tab === 'Options'">
-    <div class="form-check mb-3">
+    <div class="form-check">
       <input class="form-check-input" type="checkbox" v-model="useNewWindow" value="" id="useNewWindow">
       <label class="form-check-label" for="useNewWindow">
         Open in new Window/Tab
       </label>
     </div>
+    <p>When set, clicking the bookmarklet opens a new tab. Otherwise, the current tab is used.
+    </p>
+
 
     <div class="form-check">
       <input :disabled="!canOpenURL" class="form-check-input" type="checkbox" v-model="openURL" value=""

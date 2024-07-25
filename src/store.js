@@ -56,11 +56,17 @@ export default defineStore('store', {
         saveAction(action, index, position) {
             if (index === 'new') {
                 action.id = uuidv4();
+                /*
+
                 if (position === 'top') {
                     this.actions.unshift(action);
                 } else {
                     this.actions.push(action);
                 }
+
+                 */
+
+                this.actions.splice(position, 0, action);
             } else {
                 this.actions[index] = action;
             }

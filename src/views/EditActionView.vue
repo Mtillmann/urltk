@@ -1,6 +1,6 @@
 <script setup>
 import {useRoute, useRouter} from 'vue-router';
-import {inject, ref, watch} from 'vue';
+import {inject, ref} from 'vue';
 import Transformer from '../Transformer'
 import {checkTypeConflicts} from '../util';
 
@@ -10,7 +10,7 @@ const router = useRouter();
 
 const action = ref({});
 
-const position = route.query.position ?? 'bottom';
+const position = route.query.position ?? store.actions.length;
 const conflicts = ref([]);
 const {toast} = inject('toast');
 
@@ -45,7 +45,6 @@ function unshift() {
 }
 
 function splice(index) {
-
   action.value.tasks.splice(index, 0, {
     name: 'noop',
     args: Transformer.tasks['noop'].args.map((a) => a.default ?? '')
@@ -55,7 +54,6 @@ function splice(index) {
 }
 
 function remove(index) {
-
   action.value.tasks.splice(index, 1);
   conflicts.value = checkTypeConflicts(action.value.tasks.map((t) => t.name));
 }
@@ -63,7 +61,6 @@ function remove(index) {
 function resetArgs(index) {
   action.value.tasks[index].args = Transformer.tasks[action.value.tasks[index].name].args.map((a) => a.default ?? '');
 }
-
 
 </script>
 <template>
@@ -78,7 +75,7 @@ function resetArgs(index) {
     <label for="url">URL Filter</label>
   </div>
 
-  <div class="mb-3 d-flex justify-content-center">
+  <div class="my-4 d-flex justify-content-center">
     <button @click="unshift()" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i> Add
       Task
     </button>
@@ -103,7 +100,9 @@ function resetArgs(index) {
                 </option>
               </optgroup>
             </select>
-            <label :for="`task_${i}`">Task</label>
+            <label :for="`task_${i}`">
+              <i class="bi bi-gear"></i>
+              Task</label>
           </div>
           <button v-if="action.tasks.length > 1"
                   @click="remove(i)"
@@ -112,14 +111,6 @@ function resetArgs(index) {
         <p class="small text-muted mb-0 mt-2 d-none">{{
             Transformer.tasks[task.name].description
           }}</p>
-        <div class="small d-none">
-          <kbd class="bg-info"><i class="bi bi-box-arrow-in-right"></i> {{
-              Transformer.tasks[task.name].accepts.join('|')
-            }}</kbd>
-          <kbd class="bg-success ms-2"><i class="bi bi-box-arrow-right"></i> {{
-              Transformer.tasks[task.name].returns
-            }}</kbd>
-        </div>
 
       </div>
       <div class="card-body pb-0"
@@ -131,24 +122,27 @@ function resetArgs(index) {
                      :placeholder="a.name" v-model="task.args[j]"/>
               <label :for="`arg_${i}_${j}`">{{ a.name }}</label>
             </div>
-
+            <p v-if="a.hint" class="border-start border-4 ps-1 mt-2 small text-muted mb-3">{{ a.hint }}</p>
           </template>
           <template v-else-if="a.type === 'checkbox'">
-            <div class="form-check mb-3">
-              <input class="form-check-input" type="checkbox"
-                     v-model.bool="task.args[j]" :id="`arg_${i}_${j}`">
-              <label class="form-check-label" :for="`arg_${i}_${j}`">
-                {{ a.name }}
-              </label>
+            <div class="mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                       v-model.bool="task.args[j]" :id="`arg_${i}_${j}`">
+                <label class="form-check-label" :for="`arg_${i}_${j}`">
+                  {{ a.name }}
+                </label>
+              </div>
+              <p v-if="a.hint" class="border-start border-4 ps-1 mt-2  small text-muted mb-3">{{ a.hint }}</p>
             </div>
 
           </template>
-          <p v-if="a.hint" class="small text-muted mb-3">{{ a.hint }}</p>
+
         </template>
       </div>
     </div>
 
-    <div class="d-flex my-3 justify-content-center">
+    <div class="d-flex my-4 justify-content-center">
       <button @click="splice(i+1)" class="btn btn-outline-primary"><i
           class="bi bi-plus-lg"></i>Add Task
       </button>
