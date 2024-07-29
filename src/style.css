@@ -12,6 +12,7 @@ body::after{
     background-image: url("../icon-512x512.png");
     background-position: center;
     background-repeat: no-repeat;
+    background-size:cover;
     z-index: -1;
     opacity: 0.05;
 }
