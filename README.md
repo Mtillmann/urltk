@@ -1,5 +1,7 @@
 # URLtk
 
+[![](public/icons/icon-192x192.png)](https://mtillmann.github.io/urltk/)
+
 [https://mtillmann.github.io/urltk/](https://mtillmann.github.io/urltk/)
 
 - enhance, manipulate, remix URLs
