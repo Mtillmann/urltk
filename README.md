@@ -1,6 +1,6 @@
 # URLtk
 
-[![](public/icons/icon-192x192.png)](https://mtillmann.github.io/urltk/)
+[![](public/icon-192x192.png)](https://mtillmann.github.io/urltk/)
 
 [https://mtillmann.github.io/urltk/](https://mtillmann.github.io/urltk/)
 
