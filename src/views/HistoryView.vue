@@ -5,7 +5,7 @@ import {actionsFromBase64} from "../util.js";
 const store = inject('store');
 const history = store.history.map((item) => {
   if (typeof item === 'string') {
-    return {url: item, date: Date.now(), actions: null, query: {}}
+    return {url: item, date: null, actions: null, query: {}}
   }
 
   const actions = actionsFromBase64(item.actions);
@@ -52,7 +52,7 @@ function clear() {
             {{ item.url }}
           </router-link>
           <br>
-          <span class="badge text-bg-secondary">{{ new Date(item.date).toLocaleString() }}</span>
+          <span class="badge text-bg-secondary" v-if="item.date">{{ new Date(item.date).toLocaleString() }}</span>
           <span class="ms-2 badge text-bg-info" v-for="action in item.actionNames"><i
               class="bi bi-wrench-adjustable"></i> {{ action }}</span>
          </span>
