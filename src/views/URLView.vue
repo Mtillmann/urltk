@@ -151,7 +151,7 @@ function permalink(transformed) {
 
   <div v-for="t,i in transformed" :key="i" class="card mb-3">
     <div class="card-header d-flex justify-content-between align-items-center">
-      <h5 class="card-title text-truncate">{{ t.action.name }}</h5>
+      <h5 class="card-title display-8 text-truncate"><i class="bi bi-wrench-adjustable"></i> {{ t.action.name }}</h5>
 
       <div class="dropdown">
         <button class="btn btn-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -168,7 +168,7 @@ function permalink(transformed) {
           </li>
           <li>
             <a class="dropdown-item" href="#" @click.stop.prevent="tabs[i] = 'diff'">
-              Show diff
+              Show Diff
             </a>
           </li>
           <li>
@@ -234,9 +234,11 @@ function permalink(transformed) {
           <template v-if="t.isURL">URL</template>
           <template v-else>Result</template>
         </a>
+        <!--
         <a href="#" class="btn btn-outline-primary" :class="{'active' : tabs[i] === 'diff'}"
            @click.stop.prevent="tabs[i] = 'diff'" v-if="store.settings.showDiffButton">
           <i class="bi bi-file-diff"></i> Diff</a>
+          -->
         <a href="#" class="btn btn-outline-primary" @click.stop.prevent="copy(t.url)"
            v-if="store.settings.showCopyButton">
           <i class="bi bi-copy"></i> Copy</a>

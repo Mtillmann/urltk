@@ -21,9 +21,27 @@ const defaultState = {
         derefInNewTab: 'pwa-only',
     },
     history: [],
-    actions: []
+    actions: [
+        {
+            "version": 1,
+            "name": "Anonymize",
+            "filter": "*",
+            "tasks": [
+                {
+                    "name": "detrack",
+                    "args": []
+                },
+                {
+                    "name": "deref",
+                    "args": []
+                }
+            ],
+            "id": "3fec789f-2390-4fb1-8daa-af3a1628de4f"
+        }
+    ]
 
 }
+
 
 let localState = localStorage.getItem(storage_key) ? JSON.parse(localStorage.getItem(storage_key)) : defaultState;
 
@@ -49,6 +67,8 @@ export default defineStore('store', {
             setTheme(this.settings.theme);
         },
         pushHistory(url) {
+
+
             this.history = this.history.filter(item => item !== url.href);
             this.history.unshift(url.href);
             this.history = this.history.slice(0, this.settings.historyLimit);

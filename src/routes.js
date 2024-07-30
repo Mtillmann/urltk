@@ -22,7 +22,7 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: HomeView,
-            meta: {inNavigation: true, title: 'Home', icon: 'house'}
+            meta: {inNavigation: true, title: 'Remix, Enhance, Share', icon: 'house', navTitle: 'Home'}
         },
         {
             path: '/url/:url?',

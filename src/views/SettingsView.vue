@@ -85,10 +85,12 @@ function importActions(event) {
     <input class="form-check-input" v-model="settings.showOpenButton" type="checkbox" role="switch" id="showOpenButton">
     <label class="form-check-lable" for="showOpenButton">Show Open-Button</label>
   </div>
+  <!--
   <div class="form-check form-switch mb-4">
     <input class="form-check-input" v-model="settings.showDiffButton" type="checkbox" role="switch" id="showDiffButton">
     <label class="form-check-lable" for="showDiffButton">Show Diff-Button</label>
   </div>
+  -->
   <div class="form-check form-switch mb-4">
     <input class="form-check-input" v-model="settings.showCopyButton" type="checkbox" role="switch" id="showCopyButton">
     <label class="form-check-lable" for="showCopyButton">Show Copy-Button</label>

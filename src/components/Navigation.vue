@@ -36,7 +36,7 @@ const isActive = (route) => {
         <router-link v-if="r.meta.inNavigation" class="pt-3 d-flex flex-nowrap nav-link"
                      :class="{'active shadow':isActive(r)}" :to="r.path">
           <i :class="`bi bi-${ r.meta.icon } me-2`"></i>
-          {{ r.meta.title }}
+          {{ r.meta.navTitle ?? r.meta.title }}
         </router-link>
       </template>
     </nav>

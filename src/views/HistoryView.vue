@@ -21,11 +21,29 @@ function clear() {
   <template v-if="history.length > 0">
 
     <div class="d-flex justify-content-center mb-4">
-      <button class="btn btn-danger" @click="clear">
+      <button class="btn btn-outline-danger" @click="clear">
         <i class="bi bi-x-lg"></i>
         Clear History
       </button>
     </div>
+
+    <table class="table table-striped w-100">
+      <tbody>
+      <tr v-for="url, i in history" :key="i">
+        <td class="">
+
+            <router-link :to="{ name: 'url', params: { url } }">
+              <span :class="{'text-truncate' : store.settings.cropURLsInHistoryView}">{{ url }}</span>
+
+            </router-link>
+
+        </td>
+        <td class="w-0">
+          <button class="btn btn-sm btn-outline-danger" @click="remove(url)"><i class="bi bi-trash"></i></button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
 
     <ul class="list-group list-group-flush">
       <li class="px-0 list-group-item d-flex align-items-center justify-content-between" v-for="url, i in history"
