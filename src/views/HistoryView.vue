@@ -1,12 +1,26 @@
 <script setup>
 import {inject} from 'vue';
+import {actionsFromBase64} from "../util.js";
 
 const store = inject('store');
-const history = store.history;
+const history = store.history.map((item) => {
+  if (typeof item === 'string') {
+    return {url: item, date: Date.now(), actions: null, query: {}}
+  }
+
+  const actions = actionsFromBase64(item.actions);
+
+  const actionNames = actions ? actions.map(action => action.name) : [];
+  const query = {actions: item.actions};
+
+  return {...item, actionNames, query};
+
+
+});
 const {toast} = inject('toast');
 
-function remove(url) {
-  history.splice(history.indexOf(url), 1);
+function remove(index) {
+  history.splice(index, 1);
 }
 
 function clear() {
@@ -15,6 +29,7 @@ function clear() {
     history.length = 0
   }
 }
+
 
 </script>
 <template>
@@ -27,33 +42,24 @@ function clear() {
       </button>
     </div>
 
-    <table class="table table-striped w-100">
-      <tbody>
-      <tr v-for="url, i in history" :key="i">
-        <td class="">
-
-            <router-link :to="{ name: 'url', params: { url } }">
-              <span :class="{'text-truncate' : store.settings.cropURLsInHistoryView}">{{ url }}</span>
-
-            </router-link>
-
-        </td>
-        <td class="w-0">
-          <button class="btn btn-sm btn-outline-danger" @click="remove(url)"><i class="bi bi-trash"></i></button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-
-    <ul class="list-group list-group-flush">
-      <li class="px-0 list-group-item d-flex align-items-center justify-content-between" v-for="url, i in history"
-          :key="i">
-        <router-link :class="{'text-truncate' : store.settings.cropURLsInHistoryView}"
-                     :to="{ name: 'url', params: { url } }">{{ url }}
-        </router-link>
-        <button class="btn btn-sm btn-outline-danger" @click="remove(url)"><i class="bi bi-trash"></i></button>
+    <ul class="list-group list-group-flush" v-for="item, i in history" :key="i">
+      <li class="list-group-item bg-transparent d-flex justify-content-between">
+          <div class="mt-1 me-2">
+            <button class="btn btn-sm btn-outline-danger" @click="remove(i)"><i class="bi bi-trash"></i></button>
+          </div>
+          <span class="flex-grow-1" :class="{'text-truncate' : store.settings.cropURLsInHistoryView}">
+          <router-link :to="{ name: 'url', params: { url:item.url }, query: item.query}">
+            {{ item.url }}
+          </router-link>
+          <br>
+          <span class="badge text-bg-secondary">{{ new Date(item.date).toLocaleString() }}</span>
+          <span class="ms-2 badge text-bg-info" v-for="action in item.actionNames"><i
+              class="bi bi-wrench-adjustable"></i> {{ action }}</span>
+         </span>
       </li>
     </ul>
+
+
   </template>
   <template v-else>
     <div class="alert alert-info" role="alert">

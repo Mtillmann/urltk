@@ -66,11 +66,20 @@ export default defineStore('store', {
         setTheme() {
             setTheme(this.settings.theme);
         },
-        pushHistory(url) {
+        pushHistory(url, actions = null) {
 
+            const existingIndex = this.history.findIndex(item => item.url === url.href && item.actions === actions);
+            console.log('existingIndex', existingIndex, url.href, actions);
+            if (existingIndex > -1) {
+                this.history.splice(existingIndex, 1);
+            }
 
-            this.history = this.history.filter(item => item !== url.href);
-            this.history.unshift(url.href);
+            this.history.unshift({
+                url: url.href,
+                actions: actions,
+                date: (new Date()).toISOString()
+            });
+
             this.history = this.history.slice(0, this.settings.historyLimit);
         },
         saveAction(action, index, position) {

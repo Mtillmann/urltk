@@ -51,7 +51,7 @@ if (!noActions.value) {
   }
 
   if (url) {
-    store.pushHistory(url);
+    store.pushHistory(url, isUsingQueryActions ? route.query.actions : null);
 
     transformed.value = actions
         .map((action, i) => ({...action, index: i}))
