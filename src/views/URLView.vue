@@ -1,11 +1,11 @@
 <script setup>
-import {useRoute, useRouter} from 'vue-router';
-import {inject, ref} from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { inject, ref } from 'vue';
 import Transformer from '../Transformer'
-import {diffChars} from 'diff';
-import {actionsFromBase64, copyToClipboard, deflateAction} from '../util';
+import { diffChars } from 'diff';
+import { actionsFromBase64, copyToClipboard, deflateAction } from '../util';
 import TaskFlow from '../components/TaskFlow.vue';
-import {Dropdown} from 'bootstrap';
+import { Dropdown } from 'bootstrap';
 
 (() => typeof Dropdown)();
 
@@ -13,7 +13,7 @@ import {Dropdown} from 'bootstrap';
 const store = inject('store');
 const route = useRoute();
 const router = useRouter();
-const {toast} = inject('toast');
+const { toast } = inject('toast');
 const openURL = route.query.openURL === '1';
 
 const canShare = 'share' in navigator;
@@ -26,10 +26,16 @@ const unmatched = ref([]);
 
 let url;
 try {
-  url = new URL(route.params.url);
+  let urlParam = route.params.url;
+  if (!urlParam.startsWith('http')) {
+    //assume it's base64 encoded
+    urlParam = atob(urlParam);
+  }
+
+  url = new URL(urlParam);
 } catch (e) {
   toast('Invalid URL', 'danger');
-  router.push({name: 'home'});
+  router.push({ name: 'home' });
 }
 
 const queryActions = actionsFromBase64(route.query.actions);
@@ -47,53 +53,53 @@ if (!noActions.value) {
   if (!Transformer.filter(url, actions)) {
     url = null
     toast('No actions available for given URL', 'warning', 5000);
-    router.push({name: 'home'})
+    router.push({ name: 'home' })
   }
 
   if (url) {
     store.pushHistory(url, isUsingQueryActions ? route.query.actions : null);
 
     transformed.value = actions
-        .map((action, i) => ({...action, index: i}))
-        .filter(action => {
-          const matches = Transformer.filter(url, [action]);
+      .map((action, i) => ({ ...action, index: i }))
+      .filter(action => {
+        const matches = Transformer.filter(url, [action]);
 
-          if (!matches) {
-            unmatched.value.push(action);
-          }
+        if (!matches) {
+          unmatched.value.push(action);
+        }
 
-          return matches;
-        })
-        .map(action => {
-          const transformed = Transformer.run(url, action.tasks);
-          let result = transformed.url;
-          let isURL = false;
-          try {
-            result = new URL(result);
-            isURL = true;
-          } catch (e) {
-            // ignore
-          }
-
-
-          const diff = diffChars(url.href, String(result)).reduce((string, part) => {
-            const tag = part.added ? 'ins' :
-                part.removed ? 'del' : 'span';
-            string += `<${tag}>${part.value}</${tag}>`;
-            return string;
-          }, '');
+        return matches;
+      })
+      .map(action => {
+        const transformed = Transformer.run(url, action.tasks);
+        let result = transformed.url;
+        let isURL = false;
+        try {
+          result = new URL(result);
+          isURL = true;
+        } catch (e) {
+          // ignore
+        }
 
 
-          return {
-            ...transformed,
-            result,
-            isURL,
-            action,
-            diff,
-            deflated: btoa(JSON.stringify([deflateAction(action)]))
-          }
+        const diff = diffChars(url.href, String(result)).reduce((string, part) => {
+          const tag = part.added ? 'ins' :
+            part.removed ? 'del' : 'span';
+          string += `<${tag}>${part.value}</${tag}>`;
+          return string;
+        }, '');
 
-        });
+
+        return {
+          ...transformed,
+          result,
+          isURL,
+          action,
+          diff,
+          deflated: btoa(JSON.stringify([deflateAction(action)]))
+        }
+
+      });
 
     tabs.value = transformed.value.map(() => view.value);
 
@@ -122,7 +128,7 @@ function share(name, url) {
 function permalink(transformed) {
   const actions = btoa(JSON.stringify([deflateAction(transformed.action)]));
   const shareURL = new URL(window.location.href);
-  const hash = router.resolve({name: 'url', params: {url: url.href}, query: {actions, view: transformed.view}});
+  const hash = router.resolve({ name: 'url', params: { url: url.href }, query: { actions, view: transformed.view } });
   shareURL.hash = hash.href;
 
   copy(shareURL.toString());
@@ -138,7 +144,8 @@ function permalink(transformed) {
     or check out the <router-link :to="{name: 'reference'}">reference</router-link>.
   </div>
 
-  <div class="alert alert-info d-flex align-items-center" v-if="openURL && actions.length === 1 && transformed[0].isURL">
+  <div class="alert alert-info d-flex align-items-center"
+    v-if="openURL && actions.length === 1 && transformed[0].isURL">
     <div>
       <div class="spinner-border text-info" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -211,10 +218,10 @@ function permalink(transformed) {
     </div>
     <div class="card-body">
       <div class="card-text">
-        <div v-if="tabs[i] === 'url'" class="break-all"
-             :class="{'text-truncate' : store.settings.cropURLsInURLView}">
+        <div v-if="tabs[i] === 'url'" class="break-all" :class="{'text-truncate' : store.settings.cropURLsInURLView}">
           <div v-if="t.error" class="px-2 bg-warning-subtle text-warning rounded"><i
-              class="bi bi-exclamation-octagon"></i> {{ t.error }}
+              class="bi bi-exclamation-octagon"></i>
+            {{ t.error }}
             <a href="#" @click.stop.prevent="tabs[i] = 'debug'"><i class="bi bi-bug"></i>debug</a>
           </div>
           <a v-if="t.isURL" :href="t.result" target="_blank">{{ t.result }}</a>
@@ -222,14 +229,14 @@ function permalink(transformed) {
         </div>
         <div class="diff" v-if="tabs[i] === 'diff'" v-html="t.diff"></div>
         <div class="debug" v-if="tabs[i] === 'debug'">
-          <TaskFlow :action="t.action" :trace="t.trace" :start-url="url" :compact="false"/>
+          <TaskFlow :action="t.action" :trace="t.trace" :start-url="url" :compact="false" />
         </div>
       </div>
     </div>
     <div class="card-footer d-flex justify-content-between" v-if="store.settings.showURLControls">
       <div class="btn-group w-100">
         <a href="#" class="btn btn-outline-primary" :class="{'active' : tabs[i] === 'url'}"
-           @click.stop.prevent="tabs[i] = 'url'">
+          @click.stop.prevent="tabs[i] = 'url'">
           <i class="bi" :class="{'bi-link' : t.isURL, 'bi-quote' : !t.isURL}"></i>
           <template v-if="t.isURL">URL</template>
           <template v-else>Result</template>
@@ -240,13 +247,13 @@ function permalink(transformed) {
           <i class="bi bi-file-diff"></i> Diff</a>
           -->
         <a href="#" class="btn btn-outline-primary" @click.stop.prevent="copy(t.url)"
-           v-if="store.settings.showCopyButton">
+          v-if="store.settings.showCopyButton">
           <i class="bi bi-copy"></i> Copy</a>
         <a v-if="canShare && store.settings.showShareButton" href="#" class="btn btn-outline-primary"
-           @click.stop.prevent="share(t.action.name, t.url)">
+          @click.stop.prevent="share(t.action.name, t.url)">
           <i class="bi bi-share"></i> Share</a>
         <a class="btn btn-outline-primary" target="_blank" :href="t.url"
-           v-if="t.isURL && store.settings.showOpenButton">
+          v-if="t.isURL && store.settings.showOpenButton">
           <i class="bi bi-box-arrow-up-right"></i> Open</a>
       </div>
     </div>
