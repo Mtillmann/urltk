@@ -1,10 +1,12 @@
 <script setup>
-import {useRoute, useRouter} from 'vue-router';
-import {inject, ref} from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { inject, ref } from 'vue';
 import TaskFlow from '../components/TaskFlow.vue';
-import {inflateAction, validateAction} from '../util';
+import { inflateAction, validateAction } from '../util';
 
-const {toast} = inject('toast');
+
+
+const { toast } = inject('toast');
 const store = inject('store');
 const route = useRoute();
 const router = useRouter();
@@ -49,6 +51,8 @@ if (actions) {
   }
 }
 
+
+
 if (!error.value) {
   actionsToImport.value = parsed.value.map(a => true);
 }
@@ -70,6 +74,7 @@ const addActions = () => {
   router.push('/actions');
 }
 
+
 </script>
 <template>
 
@@ -83,23 +88,23 @@ const addActions = () => {
 
     <table class="table table-bordered my-3" v-for="action, i in parsed" :key="i">
       <tbody>
-      <tr>
-        <th>Name</th>
-        <td>{{ action.name }}</td>
-      </tr>
-      <tr>
-        <th>Filter</th>
-        <td>{{ action.filter || 'n/a' }}</td>
-      </tr>
-      <tr>
-        <th>Tasks</th>
-        <td>
-          <div>
-            <TaskFlow :action="action" :compact="true"/>
-          </div>
-        </td>
-      </tr>
-      <!--
+        <tr>
+          <th>Name</th>
+          <td>{{ action.name }}</td>
+        </tr>
+        <tr>
+          <th>Filter</th>
+          <td>{{ action.filter || 'n/a' }}</td>
+        </tr>
+        <tr>
+          <th>Tasks</th>
+          <td>
+            <div>
+              <TaskFlow :action="action" :compact="true" />
+            </div>
+          </td>
+        </tr>
+        <!--
       <tr>
           <th>JSON</th>
           <td>
@@ -107,17 +112,17 @@ const addActions = () => {
           </td>
       </tr>
       -->
-      <tr>
-        <th></th>
-        <td>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" v-model="actionsToImport[i]" :id="`cb${i}`">
-            <label class="form-check-label" :for="`cb${i}`">
-              Import this action
-            </label>
-          </div>
-        </td>
-      </tr>
+        <tr>
+          <th></th>
+          <td>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" v-model="actionsToImport[i]" :id="`cb${i}`">
+              <label class="form-check-label" :for="`cb${i}`">
+                Import this action
+              </label>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
 

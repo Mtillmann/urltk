@@ -145,7 +145,7 @@ export function validateAction(action) {
     const keys = new Set(["version", "name", "filter", "tasks"]);
     const actionKeys = new Set(Object.keys(action));
 
-    if (keys.difference(actionKeys).size > 0) {
+    if (difference(keys, actionKeys).size > 0) {
         console.log('a');
         return false;
     }
