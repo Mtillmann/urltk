@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import HomeView from './views/HomeView.vue'
 import HistoryView from './views/HistoryView.vue'
@@ -22,85 +22,85 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: HomeView,
-            meta: {inNavigation: true, title: 'Remix, Enhance, Share', icon: 'house', navTitle: 'Home'}
+            meta: { inNavigation: true, title: 'Remix, Enhance, Share', icon: 'house', navTitle: 'Home' }
         },
         {
             path: '/url/:url?',
             name: 'url',
             component: URLView,
-            meta: {inNavigation: false, title: 'URL Results', icon: 'card-list'}
+            meta: { inNavigation: false, title: 'URL Results', icon: 'card-list' }
         },
         {
             path: '/history/',
             name: 'history',
             component: HistoryView,
-            meta: {inNavigation: true, title: 'History', icon: 'clock-history'}
+            meta: { inNavigation: true, title: 'History', icon: 'clock-history' }
         },
         {
             path: '/actions',
             name: 'actions',
             component: ActionsView,
-            meta: {inNavigation: true, title: 'Actions', icon: 'wrench-adjustable'}
+            meta: { inNavigation: true, title: 'Actions', icon: 'wrench-adjustable' }
         },
         {
             path: '/actions/:id',
             name: 'editAction',
             component: EditActionView,
-            meta: {inNavigation: false, title: 'Edit Action', icon: 'wrench-adjustable'}
+            meta: { inNavigation: false, title: 'Edit Action', icon: 'wrench-adjustable' }
         },
         {
             path: '/settings',
             name: 'settings',
             component: SettingsView,
-            meta: {inNavigation: true, title: 'Settings', icon: 'gear'}
+            meta: { inNavigation: true, title: 'Settings', icon: 'gear' }
         },
         {
             path: '/deref',
             name: 'deref',
             component: DerefView,
-            meta: {inNavigation: false, title: 'Remove Referrer', icon: 'arrow-bar-right'}
+            meta: { inNavigation: false, title: 'Remove Referrer', icon: 'arrow-bar-right' }
         },
         {
             path: '/actions/:id/share',
             name: 'share',
             component: ShareActionView,
-            meta: {inNavigation: false, title: 'Share Action', icon: 'share'}
+            meta: { inNavigation: false, title: 'Share Action', icon: 'share' }
         },
         {
             path: '/import-actions',
             name: 'importActions',
             component: ImportActionsView,
-            meta: {inNavigation: false, title: 'Import Action/s', icon: 'file-arroww-up'}
+            meta: { inNavigation: false, title: 'Import Action/s', icon: 'file-arroww-up' }
         },
         {
             path: '/bookmarklet',
             name: 'bookmarklet',
             component: BookmarkletView,
-            meta: {inNavigation: false, title: 'Create Bookmarklet', icon: 'bookmark-check'}
+            meta: { inNavigation: false, title: 'Create Bookmarklet', icon: 'bookmark-check' }
         },
         {
             path: '/reference',
             name: 'reference',
             component: ReferenceView,
-            meta: {inNavigation: true, title: 'Reference', icon: 'book'}
+            meta: { inNavigation: true, title: 'Reference', icon: 'book' }
         },
         {
             path: '/reference/actions',
             name: 'referenceActions',
             component: ReferenceActionsView,
-            meta: {inNavigation: false, title: 'Reference - Actions', icon: 'book'}
+            meta: { inNavigation: false, title: 'Reference - Actions', icon: 'book' }
         },
         {
             path: '/reference/tasks',
             name: 'referenceTasks',
             component: ReferenceTasksView,
-            meta: {inNavigation: false, title: 'Reference - Tasks', icon: 'book'}
+            meta: { inNavigation: false, title: 'Reference - Tasks', icon: 'book' }
         },
         {
             path: '/reference/duckduckgo',
             name: 'referenceDDG',
             component: ReferenceDDGView,
-            meta: {inNavigation: false, title: 'Reference - DuckDuckGo', icon: 'plugin'}
+            meta: { inNavigation: false, title: 'Reference - DuckDuckGo', icon: 'plugin' }
         }
 
     ]
@@ -114,6 +114,18 @@ router.beforeEach((to, from, next) => {
     if (to.hash) {
         document.querySelector(to.hash)?.scrollIntoView()
     }
+
+    const firstPathSegment = '/' + (to.path.split('/').filter(Boolean)[0] ?? '')
+
+    setTimeout(() => {
+        document.querySelector(`nav .active`)?.scrollIntoView({
+            block: 'start',
+            inline: 'nearest',
+            behavior: 'smooth'
+        });
+    }, 200);
+
+
 
     next()
 })

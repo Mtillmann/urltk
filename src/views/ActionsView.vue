@@ -1,11 +1,11 @@
 <script setup>
 import TaskFlow from '../components/TaskFlow.vue';
-import {inject} from 'vue';
-import {useRouter} from 'vue-router';
+import { inject } from 'vue';
+import { useRouter } from 'vue-router';
 
 const store = inject('store');
 const router = useRouter();
-const {toast} = inject('toast');
+const { toast } = inject('toast');
 
 function cloneAction(i) {
   const action = JSON.parse(JSON.stringify(store.actions[i]));
@@ -23,11 +23,11 @@ function removeAction(i) {
 }
 
 function editAction(i) {
-  router.push({name: 'editAction', params: {id: i}});
+  router.push({ name: 'editAction', params: { id: i } });
 }
 
 function addAction(position) {
-  router.push({name: 'editAction', params: {id: 'new'}, query: {position}});
+  router.push({ name: 'editAction', params: { id: 'new' }, query: { position } });
 }
 
 function moveAction(from, to) {
@@ -35,7 +35,6 @@ function moveAction(from, to) {
   store.actions.splice(from, 1);
   store.actions.splice(to, 0, action);
 }
-
 </script>
 <template>
 
@@ -49,23 +48,31 @@ function moveAction(from, to) {
     </div>
   </div>
   <template v-else>
+    
     <template v-for="action, i in store.actions" :key="i">
+      
       <div class="card mb-3">
         <div class="card-header d-flex justify-content-between align-items-center">
           <h5 class="card-title display-8 text-truncate">
             <i class="bi bi-wrench-adjustable"></i>
-            {{ action.name }}</h5>
+            {{ action.name }}
+          </h5>
+          
           <div class="btn-group btn-group-sm">
 
-            <button :disabled="i === 0" class="btn btn-outline-secondary" @click="moveAction(i,i-1)"><i class="bi bi-caret-up-fill"></i></button>
-            <button :disabled="i === store.actions.length - 1" class="btn btn-outline-secondary" @click="moveAction(i,i+1)"><i class="bi bi-caret-down-fill"></i></button>
+            <button :disabled="i === 0" class="btn btn-outline-secondary" @click="moveAction(i,i-1)"><i
+                class="bi bi-caret-up-fill"></i></button>
+            <button :disabled="i === store.actions.length - 1" class="btn btn-outline-secondary"
+              @click="moveAction(i,i+1)"><i class="bi bi-caret-down-fill"></i></button>
           </div>
         </div>
+        
         <div class="card-body small">
 
-          <TaskFlow :action="action"/>
+          <TaskFlow :action="action" />
 
         </div>
+        
         <div class="card-footer d-flex justify-content-center">
           <div class="btn-group">
             <button class="btn btn-outline-primary" @click="editAction(i)"><i class="bi bi-pencil me-lg-1"></i>
@@ -87,6 +94,7 @@ function moveAction(from, to) {
             </button>
           </div>
         </div>
+        
       </div>
 
       <div class="d-flex justify-content-center my-4">
@@ -94,10 +102,8 @@ function moveAction(from, to) {
           Action
         </button>
       </div>
-
+    
     </template>
-
+  
   </template>
-
-
 </template>

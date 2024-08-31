@@ -16,7 +16,7 @@ watch(() => url.value, (value) => {
 
 
 onMounted(() => {
-  input.value.focus();
+  //input.value.focus();
 });
 
 function go() {

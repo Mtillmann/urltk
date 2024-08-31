@@ -1,4 +1,5 @@
 import Transformer from './Transformer';
+import difference from 'set.prototype.difference'
 
 export function isObject(item) {
     return (item && typeof item === 'object' && !Array.isArray(item));
@@ -11,10 +12,10 @@ export function mergeDeep(target, ...sources) {
     if (isObject(target) && isObject(source)) {
         for (const key in source) {
             if (isObject(source[key])) {
-                if (!target[key]) Object.assign(target, {[key]: {}});
+                if (!target[key]) Object.assign(target, { [key]: {} });
                 mergeDeep(target[key], source[key]);
             } else {
-                Object.assign(target, {[key]: source[key]});
+                Object.assign(target, { [key]: source[key] });
             }
         }
     }
@@ -76,8 +77,9 @@ export function checkTypeConflicts(tasks) {
     for (let i = 1; i < tasks.length; i++) {
         const previousTaskReturn = new Set(Transformer.tasks[tasks[i - 1]].returns);
         const currentTaskAccepts = new Set(Transformer.tasks[tasks[i]].accepts);
-        const diff = previousTaskReturn.difference(currentTaskAccepts);
+        //const diff = previousTaskReturn.difference(currentTaskAccepts);
 
+        const diff = difference(previousTaskReturn, currentTaskAccepts);
 
         if (diff.size === 0) {
             conflicts.push(false);
@@ -112,7 +114,7 @@ export function inflateAction(action) {
         version: action[1],
         name: action[2],
         filter: action[3],
-        tasks: action[4].map(task => ({name: task[0], args: task[1]}))
+        tasks: action[4].map(task => ({ name: task[0], args: task[1] }))
     };
 }
 
@@ -130,7 +132,7 @@ export function cropText(text, len) {
 }
 
 export function download(content, mimeType, filename) {
-    const blob = new Blob([content], {type: mimeType});
+    const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a')
     a.setAttribute('href', url);
